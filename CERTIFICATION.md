@@ -5,11 +5,11 @@ Réalisé par Gabriel Bertrand & Keven Champagne
 
 ##### Récits utilisateur choisi:
 - Bleu/Orange
-    - 1
-    - 2
-    - 3
+    - 11 (*Voir les commentaires d'une station*)
+    - 12 (*Ajouter un commentaire à une station*)
+    - 13 (*Être informé du nombre de commentaires*)
 - Rouge
-    - 1
+    - 7 (*Rechercher des stations par nom*)
 
 ##### Bogue(s) connu(s):
 - Aucun 
