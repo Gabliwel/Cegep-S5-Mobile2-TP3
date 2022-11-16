@@ -2,7 +2,8 @@
     "login": {
         "user_does_not_exist": "Impossible de trouver l'utilisateur.",
         "user_not_empty": "Ne peut être vide.",
-        "user_not_a_number": "Saisissez un nombre.",
+        "user_password_short": "Ne peut avoir moins de 5 charactères.",
+        "user_email_invalid": "Adresse courriel invalide.",
         "cant_create_user": "Impossible de créer le compte, veuillez vérifier vos informations."
     },
     "app": {
