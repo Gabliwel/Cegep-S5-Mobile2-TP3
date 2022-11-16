@@ -1,0 +1,12 @@
+{
+    "login": {
+        "user_does_not_exist": "Impossible de trouver l'utilisateur.",
+        "user_not_empty": "Ne peut être vide.",
+        "user_not_a_number": "Saisissez un nombre.",
+        "cant_create_user": "Impossible de créer le compte, veuillez vérifier vos informations."
+    },
+    "app": {
+        "error": "L'action demandée a provoquée une erreur. Communiquez avec les développeurs si l'erreur persiste."
+    }
+}
+  
