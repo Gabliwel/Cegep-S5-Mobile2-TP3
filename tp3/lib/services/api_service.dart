@@ -5,9 +5,9 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:tp3/app/app.locator.dart';
 import 'package:tp3/models/comment.dart';
-import 'package:tp3/models/post.dart';
 import 'package:tp3/models/user.dart';
 import 'package:tp3/utils/maybe.dart';
+import 'package:tp3/models/station.dart';
 
 class ApiService {
   var client = locator<http.Client>();
@@ -57,20 +57,22 @@ class ApiService {
     return MayBe(user);
   }
 
-  Future<List<Post>> getPostsForUser(int userId) async {
-    var posts = <Post>[];
+  Future<List<Comment>> getCommentsForSlug(String slugName) async {
+    var comments = <Comment>[];
 
+    print('$revolvair/stations/$slugName/comments');
     var response =
-        await client.get(Uri.parse('$endpoint/posts?userId=$userId'));
+        await client.get(Uri.parse('$revolvair/stations/$slugName/comments'));
     var parsed = jsonDecode(response.body) as List<dynamic>;
-    for (var post in parsed) {
-      posts.add(Post.fromMap(post));
+    for (var comment in parsed) {
+      print(comment);
+      comments.add(Comment.fromMap(comment));
     }
 
-    return posts;
+    return comments;
   }
 
-  Future<List<Comment>> getCommentsForPost(int postId) async {
+  /* Future<List<Comment>> getCommentsForPost(int postId) async {
     var comments = <Comment>[];
 
     var response =
@@ -80,5 +82,19 @@ class ApiService {
       comments.add(Comment.fromMap(comment));
     }
     return comments;
-  }
+  } */
+
+
+  Future<List<Station>> fetchActiveStation() async {
+  final response = await client
+      .get(Uri.parse('$revolvair/revolvair/stations/'));
+  if (response.statusCode == 200) {
+    print(jsonDecode(response.body));
+    return Station.getAllActiveStation(Station.getAllStation(jsonDecode(response.body)));
+  } else {
+    throw Exception('Failed to load actives station');
+  } 
+}
+
+
 }

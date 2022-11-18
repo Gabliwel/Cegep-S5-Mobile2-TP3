@@ -1,23 +1,25 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tp3/app/app.locator.dart';
 import 'package:tp3/generated/locale_keys.g.dart';
-import 'package:tp3/models/post.dart';
+import 'package:tp3/models/comment.dart';
 import 'package:tp3/services/api_service.dart';
 
-class PostsViewModel extends BaseViewModel {
+class CommentsViewModel extends BaseViewModel {
   final _api = locator<ApiService>();
   final _navigationService = locator<NavigationService>();
   final _dialogService = locator<DialogService>();
-  List<Post> posts = [];
+  List<Comment> comments = [];
 
-  Future getPosts(int userId) async {
+  Future getComments(String slugName) async {
     setBusy(true);
     try {
-      posts = await _api.getPostsForUser(userId);
+      comments = await _api.getCommentsForSlug(slugName);
     } catch (e) {
       await _dialogService.showDialog(description: tr(LocaleKeys.app_error));
+      print(LocaleKeys.app_error);
     } finally {
       setBusy(false);
     }

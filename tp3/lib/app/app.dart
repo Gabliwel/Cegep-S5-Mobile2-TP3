@@ -5,8 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:tp3/services/api_service.dart';
 import 'package:tp3/services/authentication_service.dart';
 import 'package:tp3/views/login_view.dart';
-import 'package:tp3/views/posts_view.dart';
+import 'package:tp3/views/comments_view.dart';
 import 'package:tp3/views/sign_up_view.dart';
+import 'package:tp3/views/stations_view.dart';
 
 // Pour le easy_location
 // flutter pub run easy_localization:generate -f keys -o locale_keys.g.dart -S ./assets/translations
@@ -18,7 +19,8 @@ import 'package:tp3/views/sign_up_view.dart';
   routes: [
     MaterialRoute(page: LoginView, initial: true),
     MaterialRoute(page: SignUpView),
-    MaterialRoute(page: PostsView),
+    MaterialRoute(page: CommentsView),
+    MaterialRoute(page: AllStationView)
   ],
   // Voir https://pub.dev/packages/stacked#dependency-registration
   dependencies: [

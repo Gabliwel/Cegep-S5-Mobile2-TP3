@@ -20,8 +20,7 @@ class LoginViewModel extends BaseViewModel {
       log(_authenticationService.isUserAuthenticated.toString());
       if (_authenticationService.isUserAuthenticated) {
         await _navigationService.navigateTo(
-          Routes.postsView,
-          arguments: PostsViewArguments(userId: 1),
+          Routes.allStationView,
         );
       } else {
         // Todo : afficher le message dans un formulaire
