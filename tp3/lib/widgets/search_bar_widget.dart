@@ -3,6 +3,7 @@ import 'package:tp3/viewmodels/station_viewmodel.dart';
 
 import '../models/station.dart';
 
+//https://www.geeksforgeeks.org/flutter-search-bar/
 class SearchBar extends SearchDelegate{
   List<Station> searchList;
   StationsViewModel stationViewModel;

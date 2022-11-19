@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tp3/viewmodels/comments_viewmodel.dart';
+import 'package:tp3/widgets/custom_comment_list_tile.dart';
 import 'package:tp3/widgets/post_item.dart';
 
 class CommentsView extends StatelessWidget {
@@ -25,14 +26,13 @@ class CommentsView extends StatelessWidget {
             itemCount: viewModel.comments.length,
             itemBuilder: (context, int index){
               return GestureDetector(
-                // Mettre un ID 
                   key: ValueKey<int>(( viewModel.comments.elementAt(index).id)),
-                  child: Card(
+                  child: /* Card(
                     child: ListTile(
-                      title: Text("${viewModel.comments.elementAt(index).id} - ${ viewModel.comments.elementAt(index).userName}"),
+                      title: Text(viewModel.comments.elementAt(index).userName),
                       subtitle: Text( viewModel.comments.elementAt(index).body) 
-                    ),
-                  ),
+                    ), */
+                    CustomCommentListItem(userName:viewModel.comments.elementAt(index).userName, body: viewModel.comments.elementAt(index).body, postedTime: viewModel.comments.elementAt(index).createdTime ),
               );
             }))
             : const Center(

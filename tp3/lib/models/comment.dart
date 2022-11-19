@@ -5,6 +5,7 @@ class Comment {
   final String body;
   final int userId;
   final String userName;
+  final String createdTime;
   
 
   Comment(
@@ -12,6 +13,7 @@ class Comment {
     this.body,
     this.userId,
     this.userName,
+    this.createdTime
   );
 
   Map<String, dynamic> toMap() {
@@ -20,6 +22,7 @@ class Comment {
       'user_id': userId,
       'name': userName,
       'text': body,
+      'created_at': createdTime
     };
   }
 
@@ -29,6 +32,7 @@ class Comment {
       map['text'],
       map['user_id'],
       map['name'],
+      map['created_at']
     );
   }
 
