@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:tp3/models/post.dart';
 
 class PostItem extends StatelessWidget {
@@ -38,3 +38,4 @@ class PostItem extends StatelessWidget {
     );
   }
 }
+ */

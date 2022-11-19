@@ -65,7 +65,7 @@ class LoginViewModel extends BaseViewModel {
           arguments: WelcomeViewArguments(user: _authenticationService.authenticatedUser),
         );
       }*/
-      
+
       // pas de moyen de test le token????
       User userTest = User(1, "remember me test", token);
       await _navigationService.replaceWith(

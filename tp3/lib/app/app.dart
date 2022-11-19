@@ -9,6 +9,9 @@ import 'package:tp3/views/about_view.dart';
 import 'package:tp3/views/login_view.dart';
 import 'package:tp3/views/sign_up_view.dart';
 import 'package:tp3/views/welcome_view.dart';
+import 'package:tp3/views/comments_view.dart';
+import 'package:tp3/views/sign_up_view.dart';
+import 'package:tp3/views/stations_view.dart';
 
 // Pour le easy_location
 // flutter pub run easy_localization:generate -f keys -o locale_keys.g.dart -S ./assets/translations
@@ -22,6 +25,8 @@ import 'package:tp3/views/welcome_view.dart';
     MaterialRoute(page: SignUpView),
     MaterialRoute(page: WelcomeView),
     MaterialRoute(page: AboutView),
+    MaterialRoute(page: CommentsView),
+    MaterialRoute(page: AllStationView)
   ],
   // Voir https://pub.dev/packages/stacked#dependency-registration
   dependencies: [
