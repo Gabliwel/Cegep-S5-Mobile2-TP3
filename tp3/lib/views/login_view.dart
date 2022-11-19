@@ -19,12 +19,19 @@ class _LoginViewState extends State<LoginView> {
   // pour le remember me, a voir avant si une méthode que veux le prof
 
   @override
+  void initState() {
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoginViewModel>.reactive(
       viewModelBuilder: () => LoginViewModel(),
+      onModelReady: (viewModel) => viewModel.rememberMeLogin(),
       // onModelReady: (viewModel) => viewModel.initialize(),
       builder: (context, loginViewModel, child) => Scaffold(
-        appBar: AppBar(title: const Text("Inscription"), automaticallyImplyLeading: false),
+        appBar: AppBar(title: const Text("Connexion"), automaticallyImplyLeading: false),
         body: Form(
           key: _formKey,
           child: Center(
@@ -32,6 +39,9 @@ class _LoginViewState extends State<LoginView> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 const SizedBox(height: 5),
+                loginViewModel.rememberMeLoginAction
+                  ? const CircularProgressIndicator()
+                  : Column(children: [
                 Image.asset("assets/images/revolvair-logo.jpg"),
                 const SizedBox(height: 25),
                 TextFormField(
@@ -73,7 +83,7 @@ class _LoginViewState extends State<LoginView> {
                     loginViewModel.signUp();
                   }
                 )
-              ],
+              ])],
             ),
           ),
         ),

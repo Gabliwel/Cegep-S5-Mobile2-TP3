@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 class MayBe<T> {
   final List<T> _values = [];
+  String? _warning;
 
   T get value => _values.first;
+  String? get warning => _warning;
 
   MayBe.empty() {
     //
@@ -9,6 +13,14 @@ class MayBe<T> {
 
   MayBe(T value) {
     _values.add(value);
+  }
+
+  setWarning(String warning) {
+    _warning = warning;
+  }
+
+  clearWarning() {
+    _warning = null;
   }
 
   bool hasValue() {

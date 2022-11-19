@@ -1,9 +1,11 @@
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tp3/app/app.locator.dart';
+import 'package:tp3/app/app.router.dart';
 import 'package:tp3/generated/locale_keys.g.dart';
 import 'package:tp3/services/authentication_service.dart';
 
@@ -17,9 +19,20 @@ class SignUpViewModel extends BaseViewModel {
     try {
       await _authenticationService.signUp(name, email, password);
       if(_authenticationService.isUserAuthenticated) {
-        log("yeeeeeeeeeeeeeeeeeeeah");
+        SharedPreferences.getInstance().then((prefs) { 
+          prefs.setString('token', _authenticationService.authenticatedUser.token);
+        });
+        await _navigationService.replaceWith(
+          Routes.welcomeView,
+          arguments: WelcomeViewArguments(user: _authenticationService.authenticatedUser),
+        );
       } else {
-        await _dialogService.showDialog(description: tr(LocaleKeys.login_cant_create_user));
+        if(_authenticationService.hasWarning()) {
+          await _dialogService.showDialog(description: _authenticationService.getWarning());
+          _authenticationService.clearWarning();
+        } else {
+          await _dialogService.showDialog(description: tr(LocaleKeys.login_cant_create_user));
+        }
       }
     } catch (e) {
       await _dialogService.showDialog(description: tr(LocaleKeys.app_error));

@@ -1,17 +1,22 @@
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tp3/app/app.locator.dart';
 import 'package:tp3/app/app.router.dart';
 import 'package:tp3/generated/locale_keys.g.dart';
+import 'package:tp3/models/user.dart';
 import 'package:tp3/services/authentication_service.dart';
+import 'package:tp3/viewmodels/welcome_viewmodel.dart';
 
 class LoginViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _authenticationService = locator<AuthenticationService>();
   final _dialogService = locator<DialogService>();
+
+  bool rememberMeLoginAction = false;
 
   Future login(String email, String password) async {
     setBusy(true);
@@ -19,9 +24,14 @@ class LoginViewModel extends BaseViewModel {
       await _authenticationService.login(email, password);
       log(_authenticationService.isUserAuthenticated.toString());
       if (_authenticationService.isUserAuthenticated) {
-        await _navigationService.navigateTo(
-          Routes.postsView,
-          arguments: PostsViewArguments(userId: 1),
+        log(_authenticationService.authenticatedUser.token);
+        SharedPreferences.getInstance().then((prefs) { 
+          prefs.setString('token', _authenticationService.authenticatedUser.token);
+        });
+        log("done");
+        await _navigationService.replaceWith(
+          Routes.welcomeView,
+          arguments: WelcomeViewArguments(user: _authenticationService.authenticatedUser),
         );
       } else {
         // Todo : afficher le message dans un formulaire
@@ -37,5 +47,38 @@ class LoginViewModel extends BaseViewModel {
 
   void signUp() async {
     await _navigationService.navigateTo(Routes.signUpView);
+  }
+
+  void rememberMeLogin() async {
+    setBusyRememberLogin(true);
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("token");
+
+    if(token != null) {
+      log("token: $token");
+      //voir avec le prof
+      //_authenticationService.tokenLogin(token);
+      /*if(_authenticationService.isUserAuthenticated) {
+        await _navigationService.replaceWith(
+          Routes.welcomeView,
+          arguments: WelcomeViewArguments(user: _authenticationService.authenticatedUser),
+        );
+      }*/
+      
+      // pas de moyen de test le token????
+      User userTest = User(1, "remember me test", token);
+      await _navigationService.replaceWith(
+        Routes.welcomeView,
+        arguments: WelcomeViewArguments(user: userTest),
+      );
+    }
+
+    setBusyRememberLogin(false);
+  }
+  
+  void setBusyRememberLogin(value) {
+    rememberMeLoginAction = value;
+    notifyListeners();
   }
 }

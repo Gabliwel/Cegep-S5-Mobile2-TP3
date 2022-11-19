@@ -5,25 +5,30 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i5;
+import 'package:flutter/foundation.dart' as _i6;
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i6;
+import 'package:stacked_services/stacked_services.dart' as _i8;
+import 'package:tp3/models/user.dart' as _i7;
+import 'package:tp3/views/about_view.dart' as _i5;
 import 'package:tp3/views/login_view.dart' as _i2;
-import 'package:tp3/views/posts_view.dart' as _i4;
 import 'package:tp3/views/sign_up_view.dart' as _i3;
+import 'package:tp3/views/welcome_view.dart' as _i4;
 
 class Routes {
   static const loginView = '/';
 
   static const signUpView = '/sign-up-view';
 
-  static const postsView = '/posts-view';
+  static const welcomeView = '/welcome-view';
+
+  static const aboutView = '/about-view';
 
   static const all = <String>{
     loginView,
     signUpView,
-    postsView,
+    welcomeView,
+    aboutView,
   };
 }
 
@@ -38,8 +43,12 @@ class StackedRouter extends _i1.RouterBase {
       page: _i3.SignUpView,
     ),
     _i1.RouteDef(
-      Routes.postsView,
-      page: _i4.PostsView,
+      Routes.welcomeView,
+      page: _i4.WelcomeView,
+    ),
+    _i1.RouteDef(
+      Routes.aboutView,
+      page: _i5.AboutView,
     ),
   ];
 
@@ -56,10 +65,16 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i4.PostsView: (data) {
-      final args = data.getArgs<PostsViewArguments>(nullOk: false);
+    _i4.WelcomeView: (data) {
+      final args = data.getArgs<WelcomeViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => _i4.PostsView(key: args.key, userId: args.userId),
+        builder: (context) => _i4.WelcomeView(key: args.key, user: args.user),
+        settings: data,
+      );
+    },
+    _i5.AboutView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const _i5.AboutView(),
         settings: data,
       );
     },
@@ -71,18 +86,18 @@ class StackedRouter extends _i1.RouterBase {
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
-class PostsViewArguments {
-  const PostsViewArguments({
+class WelcomeViewArguments {
+  const WelcomeViewArguments({
     this.key,
-    required this.userId,
+    required this.user,
   });
 
-  final _i5.Key? key;
+  final _i6.Key? key;
 
-  final int userId;
+  final _i7.User user;
 }
 
-extension NavigatorStateExtension on _i6.NavigationService {
+extension NavigatorStateExtension on _i8.NavigationService {
   Future<dynamic> navigateToLoginView([
     int? routerId,
     bool preventDuplicates = true,
@@ -111,17 +126,31 @@ extension NavigatorStateExtension on _i6.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToPostsView({
-    _i5.Key? key,
-    required int userId,
+  Future<dynamic> navigateToWelcomeView({
+    _i6.Key? key,
+    required _i7.User user,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   }) async {
-    return navigateTo<dynamic>(Routes.postsView,
-        arguments: PostsViewArguments(key: key, userId: userId),
+    return navigateTo<dynamic>(Routes.welcomeView,
+        arguments: WelcomeViewArguments(key: key, user: user),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToAboutView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.aboutView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
