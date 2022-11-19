@@ -8,28 +8,35 @@ class CommentsView extends StatelessWidget {
 
   const CommentsView({Key? key, required this.slugName}) : super(key: key);
 
-  @override
+ @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<CommentsViewModel>.reactive(
-      viewModelBuilder: () => CommentsViewModel(),
-      onModelReady: (viewModel) => viewModel.getComments(slugName),
-      builder: (BuildContext context, viewModel, Widget? child) => Scaffold(
-        body: Center(
-          child: /* viewModel.isBusy
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : Expanded(
-                  child: ListView.builder(
-                    itemCount: viewModel.comments.length,
-                    itemBuilder: (context, index) => ListTile(
-                      onTap: () => viewModel.navigateToPost(index),
+   return ViewModelBuilder<CommentsViewModel>.reactive(
+    viewModelBuilder: () => CommentsViewModel(),
+    onModelReady: (viewModel) => viewModel.getComments(slugName), 
+    builder: (context, viewModel, child) => Scaffold(
+        appBar: AppBar(
+          title: const Text("Comments"),
+          backgroundColor: Colors.black,
+        ),
+        body : 
+        viewModel.comments.isNotEmpty ?
+        Center( 
+          child: ListView.builder(
+            itemCount: viewModel.comments.length,
+            itemBuilder: (context, int index){
+              return GestureDetector(
+                // Mettre un ID 
+                  key: ValueKey<int>(( viewModel.comments.elementAt(index).id)),
+                  child: Card(
+                    child: ListTile(
+                      title: Text("${viewModel.comments.elementAt(index).id} - ${ viewModel.comments.elementAt(index).userName}"),
+                      subtitle: Text( viewModel.comments.elementAt(index).body) 
                     ),
                   ),
-                ), */
-                Text("Test"),
-        ),
-      ),
-    );
+              );
+            }))
+            : const Center(
+              child: Text("This slug has no comments"))),
+      );
   }
 }

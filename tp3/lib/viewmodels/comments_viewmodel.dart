@@ -16,6 +16,8 @@ class CommentsViewModel extends BaseViewModel {
   Future getComments(String slugName) async {
     setBusy(true);
     try {
+      print("Reach");
+      print( await _api.getCommentsForSlug(slugName));
       comments = await _api.getCommentsForSlug(slugName);
     } catch (e) {
       await _dialogService.showDialog(description: tr(LocaleKeys.app_error));

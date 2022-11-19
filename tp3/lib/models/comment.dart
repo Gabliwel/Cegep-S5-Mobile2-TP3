@@ -1,48 +1,34 @@
 import 'dart:convert';
 
 class Comment {
-  final int userId;
   final int id;
-  final String userName;
   final String body;
+  final int userId;
+  final String userName;
+  
 
   Comment(
-    this.userId,
     this.id,
-    this.userName,
     this.body,
+    this.userId,
+    this.userName,
   );
-
-  Comment copyWith({
-    int? postId,
-    int? id,
-    String? name,
-    String? email,
-    String? body,
-  }) {
-    return Comment(
-      postId ?? this.userId,
-      id ?? this.id,
-      name ?? this.userName,
-      body ?? this.body,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return {
-      'postId': userId,
       'id': id,
+      'user_id': userId,
       'name': userName,
-      'body': body,
+      'text': body,
     };
   }
 
   factory Comment.fromMap(Map<String, dynamic> map) {
     return Comment(
-      map['postId'],
       map['id'],
+      map['text'],
+      map['user_id'],
       map['name'],
-      map['email'],
     );
   }
 
@@ -53,7 +39,7 @@ class Comment {
 
   @override
   String toString() {
-    return 'Comment(postId: $userId, id: $id, name: $userName, body: $body)';
+    return 'Comment(id: $id, user_id: $userId, name: $userName, text: $body)';
   }
 
   @override
@@ -61,16 +47,16 @@ class Comment {
     if (identical(this, other)) return true;
 
     return other is Comment &&
-        other.userId == userId &&
         other.id == id &&
+        other.userId == userId &&
         other.userName == userName &&
         other.body == body;
   }
 
   @override
   int get hashCode {
-    return userId.hashCode ^
-        id.hashCode ^
+    return id.hashCode ^
+        userId.hashCode ^
         userName.hashCode ^
         body.hashCode;
   }

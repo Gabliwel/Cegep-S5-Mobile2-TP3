@@ -63,8 +63,22 @@ class ApiService {
     print('$revolvair/stations/$slugName/comments');
     var response =
         await client.get(Uri.parse('$revolvair/stations/$slugName/comments'));
-    var parsed = jsonDecode(response.body) as List<dynamic>;
-    for (var comment in parsed) {
+    /* print('Response :');
+    print(response.body); */
+    var parsed = jsonDecode(response.body) as Map<String,dynamic>;
+    /* print('Parsed : ');
+    print(parsed.values.elementAt(0));
+    print(parsed.values.elementAt(0)[0]);
+    print(parsed.values.elementAt(0)[0]['text']); */
+
+    
+    /* for(Comment element in parsed.values.elementAt(0)){
+      print(Comment.fromMap(element));
+      comments.add(Comment(element.id, element.body, element.userId, element.userName));
+    } */
+    /* print(comments); */
+    
+    for (var comment in parsed.values.elementAt(0)) {
       print(comment);
       comments.add(Comment.fromMap(comment));
     }
