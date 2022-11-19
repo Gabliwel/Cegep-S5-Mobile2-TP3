@@ -15,7 +15,7 @@ class CommentsView extends StatelessWidget {
     onModelReady: (viewModel) => viewModel.getComments(slugName), 
     builder: (context, viewModel, child) => Scaffold(
         appBar: AppBar(
-          title: const Text("Comments"),
+          title: Text("Comments for $slugName"),
           backgroundColor: Colors.black,
         ),
         body : 

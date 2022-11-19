@@ -6,6 +6,7 @@ import 'package:stacked/stacked.dart';
 import 'package:tp3/models/station.dart';
 import 'package:tp3/viewmodels/station_viewmodel.dart';
 import 'package:tp3/views/comments_view.dart';
+import 'package:tp3/widgets/search_bar_widget.dart';
 
 class AllStationView extends StatefulWidget {
   const AllStationView({super.key, required this.title});
@@ -36,6 +37,12 @@ class _AllStationViewState extends State<AllStationView> {
         appBar: AppBar(
           title: const Text("Stations"),
           backgroundColor: Colors.black,
+          actions: [
+            IconButton(
+              onPressed: (){
+                showSearch(
+                  context: context, delegate: SearchBar(searchList: viewModel.stations, stationViewModel: viewModel));
+          }, icon: const Icon(Icons.search))],
         ),
         body : 
         Center( 
