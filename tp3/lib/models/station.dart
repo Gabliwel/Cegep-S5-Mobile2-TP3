@@ -7,6 +7,7 @@ class Station{
   final String? description;
   final int? ownerId;
   final String slugName; 
+  final int commentNumber;
   
 
   const Station({
@@ -15,6 +16,7 @@ class Station{
     required this.description,
     required this.ownerId,
     required this.slugName,
+    required this.commentNumber,
   });
 
   static List<dynamic> getAllStation(Map<String, dynamic> json){
@@ -32,7 +34,8 @@ class Station{
           name :allStation[i]["name"],
           description : allStation[i]["description"],
           ownerId : allStation[i]["user_id"],
-          slugName: allStation[i]["slug"]
+          slugName: allStation[i]["slug"],
+          commentNumber: allStation[i]["comment_count"],
           ));
       }
     }

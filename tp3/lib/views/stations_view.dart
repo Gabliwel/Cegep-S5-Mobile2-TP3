@@ -47,6 +47,7 @@ class _AllStationViewState extends State<AllStationView> {
                   key: ValueKey<int>(( viewModel.stations.elementAt(index).slugID)),
                   child: Card(
                     child: ListTile(
+                      trailing: Text('Comment count : ${viewModel.stations.elementAt(index).commentNumber}'),
                       title: Text("${ viewModel.stations.elementAt(index).slugID} - ${ viewModel.stations.elementAt(index).name}"),
                       subtitle: ( viewModel.stations.elementAt(index).description != null) ? 
                       Text('${ viewModel.stations.elementAt(index).description}'): null
