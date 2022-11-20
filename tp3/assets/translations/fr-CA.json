@@ -8,6 +8,10 @@
     },
     "app": {
         "error": "L'action demandée a provoquée une erreur. Communiquez avec les développeurs si l'erreur persiste."
+    },
+    "comment": {
+        "success_add": "Le commentaire a bien été ajouté.",
+        "failure_add": "Une erreur est survenu lors de l'ajout."
     }
 }
   

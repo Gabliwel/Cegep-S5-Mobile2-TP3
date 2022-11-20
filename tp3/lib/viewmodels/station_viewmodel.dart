@@ -35,7 +35,7 @@ class StationsViewModel extends BaseViewModel {
   }
 
   Future sendToCommentPage(String stationSlug) async {
-    await _navigationService.navigateTo(Routes.commentsView, arguments: CommentsViewArguments(slugName: stationSlug));
+    await _navigationService.navigateTo(Routes.commentsView, arguments: CommentsViewArguments(slugName: stationSlug))?.then((value) => fetchAllStation());
   }
 
   void disconnect() async {

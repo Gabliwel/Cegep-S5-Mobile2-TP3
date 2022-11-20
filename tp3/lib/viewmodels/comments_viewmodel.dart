@@ -14,9 +14,11 @@ class CommentsViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _dialogService = locator<DialogService>();
   List<Comment> comments = [];
+  String _slugName = "";
 
   Future getComments(String slugName) async {
     setBusy(true);
+    _slugName = slugName;
     try {
       comments = await _api.getCommentsForSlug(slugName);
     } catch (e) {
@@ -30,6 +32,6 @@ class CommentsViewModel extends BaseViewModel {
     _navigationService.navigateTo(
       Routes.addCommentView,
       arguments: AddCommentViewArguments(slugName: slug),
-    );
+    )?.then((value) => getComments(_slugName));
   }
 }

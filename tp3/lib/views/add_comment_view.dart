@@ -22,7 +22,7 @@ class _AddCommentView extends State<AddCommentView> {
     return ViewModelBuilder<AddCommentModel>.reactive(
       viewModelBuilder: () => AddCommentModel(),
       // onModelReady: (viewModel) => viewModel.initialize(),
-      builder: (context, loginViewModel, child) => Scaffold(
+      builder: (context, viewModel, child) => Scaffold(
         appBar: AppBar(title: const Text("Ajouter un commentaire")),
         body: Form(
           key: _formKey,
@@ -33,7 +33,7 @@ class _AddCommentView extends State<AddCommentView> {
                 const SizedBox(height: 15),
                 TextFormField(
                   controller: _commentController,
-                  validator: (value) => Validators.validateEmail(value),
+                  validator: (value) => Validators.validateBasicField(value),
                   decoration: const InputDecoration(
                     labelText: "Commentaire",
                     border: OutlineInputBorder(), 
@@ -41,11 +41,18 @@ class _AddCommentView extends State<AddCommentView> {
                   ),
                 ),
                 const SizedBox(height: 5),
-                loginViewModel.isBusy
+                viewModel.isBusy
                   ? const CircularProgressIndicator()
                   : ElevatedButton(
                       child: const Text('Ajouter'),
-                      onPressed: () {
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          bool success = await viewModel.addComment(_commentController.text, widget.slugName);
+                          if(success) {
+                            //on retire le texte seulement avec succès
+                            _commentController.text = "";
+                          }
+                        }
                       }
                     ),
               ]

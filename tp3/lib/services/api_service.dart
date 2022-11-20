@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:ffi';
 // import 'dart:html';
 
 import 'package:http/http.dart' as http;
@@ -139,13 +140,30 @@ class ApiService {
   Future<List<Station>> fetchActiveStation() async {
   final response = await client
       .get(Uri.parse('$revolvair/revolvair/stations/'));
-  if (response.statusCode == 200) {
-    print(jsonDecode(response.body));
-    return Station.getAllActiveStation(Station.getAllStation(jsonDecode(response.body)));
-  } else {
-    throw Exception('Failed to load actives station');
-  } 
-}
+    if (response.statusCode == 200) {
+      print(jsonDecode(response.body));
+      return Station.getAllActiveStation(Station.getAllStation(jsonDecode(response.body)));
+    } else {
+      throw Exception('Failed to load actives station');
+    } 
+  }
+
+  Future<bool> addComment(String text, String stationSlug, String token) async {
+    var body = json.encode({"text": text, "status": "final"});
+    final Map<String,String> headerForBearer = {
+      'Content-type' : 'application/json', 
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    var response = await client.post(Uri.parse('$revolvair/stations/$stationSlug/comments'), body: body, headers: headerForBearer);
+    log(response.statusCode.toString());
+
+    if (response.statusCode != 201) {
+      return false;
+    }
+    return true;
+  }
 
 
 }
