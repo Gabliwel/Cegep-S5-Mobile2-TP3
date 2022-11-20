@@ -10,6 +10,8 @@ import 'package:tp3/generated/locale_keys.g.dart';
 import 'package:tp3/models/user.dart';
 import 'package:tp3/services/authentication_service.dart';
 import 'package:tp3/viewmodels/welcome_viewmodel.dart';
+import 'package:tp3/views/stations_view.dart';
+import 'package:tp3/views/welcome_view.dart';
 
 class LoginViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
@@ -31,7 +33,7 @@ class LoginViewModel extends BaseViewModel {
         log("done");
         await _navigationService.replaceWith(
           Routes.welcomeView,
-          arguments: WelcomeViewArguments(user: _authenticationService.authenticatedUser),
+          arguments: WelcomeView(),
         );
       } else {
         // Todo : afficher le message dans un formulaire
@@ -67,10 +69,9 @@ class LoginViewModel extends BaseViewModel {
       }*/
 
       // pas de moyen de test le token????
-      User userTest = User(1, "remember me test", token);
       await _navigationService.replaceWith(
         Routes.welcomeView,
-        arguments: WelcomeViewArguments(user: userTest),
+        arguments: WelcomeView(),
       );
     }
 

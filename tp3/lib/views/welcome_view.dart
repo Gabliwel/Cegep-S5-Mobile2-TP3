@@ -7,8 +7,7 @@ import 'package:tp3/viewmodels/welcome_viewmodel.dart';
 import 'package:tp3/views/about_view.dart';
 
 class WelcomeView extends StatelessWidget {
-  final User user;
-  const WelcomeView({Key? key, required this.user}) : super(key: key);
+  const WelcomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +44,10 @@ class WelcomeView extends StatelessWidget {
         ),
         body: Center(
           child: Column(
-            children: [
+            children: const [
               Text(
-                'Bonjour ${user.username}!',
-                style: const TextStyle(
+                'Bonjour!',
+                style: TextStyle(
                   height: 2, 
                   fontSize: 20
                 ),
@@ -59,23 +58,25 @@ class WelcomeView extends StatelessWidget {
         bottomNavigationBar: BottomNavigationBar(
         // pas le choix de mettre plus de un element, sinon flutter cause une erreur
         // cest pourquoi même si ils ne sont pas fonctionnels, les trois éléments sont présents
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.vertical_split_sharp),
-            label: 'Stations',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.travel_explore),
-            label: 'Carte',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Mes notifications'
-          ),
-        ],
-        currentIndex: 0,
-        selectedItemColor: Colors.blue
-      ),
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Stations',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.vertical_split_sharp),
+              label: 'Stations',
+            ),
+          ],
+          currentIndex: 0,
+          selectedItemColor: Colors.blue,
+          onTap: ((value) {
+            //si stations
+            if(value == 1) {
+              viewModel.goToStations();
+            }
+          }),
+        ),
       ),
     );
   }

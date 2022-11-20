@@ -6,11 +6,11 @@ import 'package:http/http.dart' as http;
 import 'package:tp3/services/api_service.dart';
 import 'package:tp3/services/authentication_service.dart';
 import 'package:tp3/views/about_view.dart';
+import 'package:tp3/views/add_comment_view.dart';
 import 'package:tp3/views/login_view.dart';
 import 'package:tp3/views/sign_up_view.dart';
 import 'package:tp3/views/welcome_view.dart';
 import 'package:tp3/views/comments_view.dart';
-import 'package:tp3/views/sign_up_view.dart';
 import 'package:tp3/views/stations_view.dart';
 
 // Pour le easy_location
@@ -26,7 +26,8 @@ import 'package:tp3/views/stations_view.dart';
     MaterialRoute(page: WelcomeView),
     MaterialRoute(page: AboutView),
     MaterialRoute(page: CommentsView),
-    MaterialRoute(page: AllStationView)
+    MaterialRoute(page: AllStationView),
+    MaterialRoute(page: AddCommentView)
   ],
   // Voir https://pub.dev/packages/stacked#dependency-registration
   dependencies: [

@@ -11,6 +11,7 @@ import 'package:tp3/services/api_service.dart';
 import 'package:tp3/services/authentication_service.dart';
 import 'package:tp3/views/about_view.dart';
 import 'package:tp3/views/login_view.dart';
+import 'package:tp3/views/stations_view.dart';
 
 class WelcomeViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
@@ -37,6 +38,13 @@ class WelcomeViewModel extends BaseViewModel {
     await _navigationService.navigateTo(
       Routes.aboutView,
       arguments: AboutView(),
+    );
+  }
+
+  void goToStations() async {
+    await _navigationService.replaceWith(
+      Routes.allStationView,
+      arguments: AllStationView(),
     );
   }
 

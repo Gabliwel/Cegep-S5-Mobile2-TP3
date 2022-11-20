@@ -8,6 +8,7 @@ import 'package:tp3/app/app.locator.dart';
 import 'package:tp3/app/app.router.dart';
 import 'package:tp3/generated/locale_keys.g.dart';
 import 'package:tp3/services/authentication_service.dart';
+import 'package:tp3/views/welcome_view.dart';
 
 class SignUpViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
@@ -24,7 +25,7 @@ class SignUpViewModel extends BaseViewModel {
         });
         await _navigationService.replaceWith(
           Routes.welcomeView,
-          arguments: WelcomeViewArguments(user: _authenticationService.authenticatedUser),
+          arguments: WelcomeView(),
         );
       } else {
         if(_authenticationService.hasWarning()) {

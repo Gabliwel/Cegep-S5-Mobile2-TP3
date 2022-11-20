@@ -11,32 +11,54 @@ class CommentsView extends StatelessWidget {
 
  @override
   Widget build(BuildContext context) {
-   return ViewModelBuilder<CommentsViewModel>.reactive(
-    viewModelBuilder: () => CommentsViewModel(),
-    onModelReady: (viewModel) => viewModel.getComments(slugName), 
-    builder: (context, viewModel, child) => Scaffold(
+    return ViewModelBuilder<CommentsViewModel>.reactive(
+      viewModelBuilder: () => CommentsViewModel(),
+      onModelReady: (viewModel) => viewModel.getComments(slugName), 
+      builder: (context, viewModel, child) => Scaffold(
         appBar: AppBar(
-          title: Text("Comments for $slugName"),
-          backgroundColor: Colors.black,
+          title: Text("Commentaire pour $slugName"),
+          backgroundColor: Colors.blue,
         ),
         body : 
-        viewModel.comments.isNotEmpty ?
-        Center( 
-          child: ListView.builder(
-            itemCount: viewModel.comments.length,
-            itemBuilder: (context, int index){
-              return GestureDetector(
-                  key: ValueKey<int>(( viewModel.comments.elementAt(index).id)),
-                  child: /* Card(
-                    child: ListTile(
-                      title: Text(viewModel.comments.elementAt(index).userName),
-                      subtitle: Text( viewModel.comments.elementAt(index).body) 
-                    ), */
-                    CustomCommentListItem(userName:viewModel.comments.elementAt(index).userName, body: viewModel.comments.elementAt(index).body, postedTime: viewModel.comments.elementAt(index).createdTime ),
-              );
-            }))
-            : const Center(
-              child: Text("This slug has no comments"))),
-      );
+          viewModel.isBusy
+          ? const Center(child: CircularProgressIndicator()) :
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              viewModel.comments.isNotEmpty
+              ? Expanded(child: 
+                ListView.builder(
+                  itemCount: viewModel.comments.length,
+                  itemBuilder: (context, int index) {
+                    return GestureDetector(
+                      key: ValueKey<int>(( viewModel.comments.elementAt(index).id)),
+                      child: CustomCommentListItem(userName:viewModel.comments.elementAt(index).userName, body: viewModel.comments.elementAt(index).body, postedTime: viewModel.comments.elementAt(index).createdTime ),
+                    );
+                  }
+                )
+              ): 
+              const Expanded(
+                child: Center(child: Text("Aucun commentaire"))
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: OutlinedButton(
+                      onPressed: () => viewModel.goToAddComment(slugName),
+                      child: const Icon(
+                        Icons.add_circle,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                ]
+              )
+            ]
+          )
+      ),
+    );
   }
 }

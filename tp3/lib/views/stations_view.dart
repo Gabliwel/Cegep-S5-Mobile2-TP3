@@ -9,9 +9,7 @@ import 'package:tp3/views/comments_view.dart';
 import 'package:tp3/widgets/search_bar_widget.dart';
 
 class AllStationView extends StatefulWidget {
-  const AllStationView({super.key, required this.title});
-
-  final String title;
+  const AllStationView({super.key});
 
   @override
   State<AllStationView> createState() => _AllStationViewState();
@@ -20,23 +18,13 @@ class AllStationView extends StatefulWidget {
 class _AllStationViewState extends State<AllStationView> {
 
   @override
-  void initState() {
-    super.initState();
-/*     Timer(Duration(seconds: 1), () => setState(() {
-      
-    })); */
-  }  
-
-
-  @override
   Widget build(BuildContext context) {
-   return ViewModelBuilder<StationsViewModel>.reactive(
-    viewModelBuilder: () => StationsViewModel(),
-    onModelReady: (viewModel) => viewModel.fetchAllStation(), 
-    builder: (context, viewModel, child) => Scaffold(
+    return ViewModelBuilder<StationsViewModel>.reactive(
+      viewModelBuilder: () => StationsViewModel(),
+      onModelReady: (viewModel) => viewModel.fetchAllStation(), 
+      builder: (context, viewModel, child) => Scaffold(
         appBar: AppBar(
           title: const Text("Stations"),
-          backgroundColor: Colors.black,
           actions: [
             IconButton(
               onPressed: (){
@@ -44,30 +32,80 @@ class _AllStationViewState extends State<AllStationView> {
                   context: context, delegate: SearchBar(searchList: viewModel.stations, stationViewModel: viewModel));
           }, icon: const Icon(Icons.search))],
         ),
-        body : 
+        drawer: Drawer(
+          child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text('Menu'),
+            ),
+            ListTile(
+              title: const Text('À propos'),
+              onTap: () {
+                Navigator.pop(context);
+                viewModel.goToAbout();
+              },
+            ),
+            ListTile(
+              title: const Text('Se déconnecter'),
+              onTap: () {
+                Navigator.pop(context);
+                viewModel.disconnect();
+              },
+            ),
+          ]),
+        ),
+        body : viewModel.isBusy
+        ? const Center(child: CircularProgressIndicator()) :
         Center( 
           child: ListView.builder(
             itemCount: viewModel.stations.length,
-            itemBuilder: (context, int index){
+            itemBuilder: (context, int index) {
               return GestureDetector(
                 // Mettre un ID 
-                  key: ValueKey<int>(( viewModel.stations.elementAt(index).slugID)),
-                  child: Card(
-                    child: ListTile(
-                      trailing: Text('Comment count : ${viewModel.stations.elementAt(index).commentNumber}'),
-                      title: Text("${ viewModel.stations.elementAt(index).slugID} - ${ viewModel.stations.elementAt(index).name}"),
-                      subtitle: ( viewModel.stations.elementAt(index).description != null) ? 
-                      Text('${ viewModel.stations.elementAt(index).description}'): null
-                    ),
+                key: ValueKey<int>(( viewModel.stations.elementAt(index).slugID)),
+                child: Card(
+                  child: ListTile(
+                    trailing: Text('Comment count : ${viewModel.stations.elementAt(index).commentNumber}'),
+                    title: Text("${ viewModel.stations.elementAt(index).slugID} - ${ viewModel.stations.elementAt(index).name}"),
+                    subtitle: ( viewModel.stations.elementAt(index).description != null) ? 
+                    Text('${ viewModel.stations.elementAt(index).description}'): null
                   ),
+                ),
                 onTap: () async {  
                   viewModel.sendToCommentPage(viewModel.stations.elementAt(index).slugName);
-                print(viewModel.stations.elementAt(index).slugName);
-                setState(() {
-                  
-                });}
+                }
               );
-            }))),
-      );
+            }
+          )
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+        // pas le choix de mettre plus de un element, sinon flutter cause une erreur
+        // cest pourquoi même si ils ne sont pas fonctionnels, les trois éléments sont présents
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Stations',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.vertical_split_sharp),
+              label: 'Stations',
+            ),
+          ],
+          currentIndex: 1,
+          selectedItemColor: Colors.blue,
+          onTap: ((value) {
+            //si stations
+            if(value == 0) {
+              viewModel.goToWelcome();
+            }
+          }),
+        )
+      ),
+    );
   }
 }
