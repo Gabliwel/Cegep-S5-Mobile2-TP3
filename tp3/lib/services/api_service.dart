@@ -118,15 +118,16 @@ class ApiService {
     print('Reponse : ');
     print(response.body);
     print(jsonDecode(response.body));
-    if(jsonDecode(response.body) as Map<String,dynamic> ){
-      return "No value for this month";
-    }
     var parsed = jsonDecode(response.body) as Map<String,dynamic>;
 
     
-    print(parsed.values.elementAt(0)[0]);
-    print(parsed.values.elementAt(0)[0]['value'].toString());
-    return parsed.values.elementAt(0)[0]['value'].toString();
+
+    try{
+      return parsed.values.elementAt(0)[0]['value'].toString();
+
+    }catch(e){
+    return "There is no value for this month";
+    }
   }
 
   Future<List<Station>> fetchActiveStation() async {

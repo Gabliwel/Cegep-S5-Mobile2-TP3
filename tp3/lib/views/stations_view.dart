@@ -89,7 +89,7 @@ class _AllStationViewState extends State<AllStationView> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: 'Stations',
+              label: 'Accueil',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.vertical_split_sharp),

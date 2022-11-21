@@ -64,7 +64,35 @@ class StationDetailsView extends StatelessWidget {
             Text("Station last PM25 measure : ${viewModel.pm25Average}"),
               ],
             )
-          ))
+          ),
+          floatingActionButton: 
+            FloatingActionButton(
+        child: const Icon(Icons.comment),
+          onPressed: () async {
+            viewModel.sendToCommentPage(stationInfo.slugName);
+  }),
+          bottomNavigationBar: BottomNavigationBar(
+        // pas le choix de mettre plus de un element, sinon flutter cause une erreur
+        // cest pourquoi même si ils ne sont pas fonctionnels, les trois éléments sont présents
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Accueil',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.vertical_split_sharp),
+              label: 'Stations',
+            ),
+          ],
+          currentIndex: 1,
+          selectedItemColor: Colors.blue,
+          onTap: ((value) {
+            //si stations
+            if(value == 0) {
+              viewModel.goToWelcome();
+            }
+          }),
+        ))
       );
   }
 }

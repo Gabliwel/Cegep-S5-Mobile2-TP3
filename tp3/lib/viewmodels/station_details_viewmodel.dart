@@ -65,8 +65,7 @@ class StationDetailsViewModel extends BaseViewModel {
     );
   }
 
-
-  /* Future sendToCommentPage(String stationSlug) async {
-    await _navigationService.navigateTo(Routes.commentsView, arguments: CommentsViewArguments(slugName: stationSlug))?.then((value) => fetchAllStation());
-  } */
+  Future sendToCommentPage(String stationSlug) async {
+    await _navigationService.navigateTo(Routes.commentsView, arguments: CommentsViewArguments(slugName: stationSlug));
+  }
 }
