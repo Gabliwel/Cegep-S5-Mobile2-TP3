@@ -29,16 +29,16 @@ class LoginViewModel extends BaseViewModel {
         log(_authenticationService.authenticatedUser.token);
         SharedPreferences.getInstance().then((prefs) { 
           prefs.setString('token', _authenticationService.authenticatedUser.token);
+          DateTime now = DateTime.now().add(const Duration(days: 3));
+          prefs.setInt('expiration', now.millisecondsSinceEpoch);
         });
-        log("done");
+        
         await _navigationService.replaceWith(
           Routes.welcomeView,
           arguments: WelcomeView(),
         );
       } else {
-        // Todo : afficher le message dans un formulaire
-        _dialogService.showDialog(
-            description: tr(LocaleKeys.login_user_does_not_exist));
+        _dialogService.showDialog(description: tr(LocaleKeys.login_user_does_not_exist));
       }
     } catch (e) {
       await _dialogService.showDialog(description: tr(LocaleKeys.app_error));
@@ -56,23 +56,17 @@ class LoginViewModel extends BaseViewModel {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("token");
+    int? expiration = prefs.getInt("expiration");
 
-    if(token != null) {
-      log("token: $token");
-      //voir avec le prof
-      //_authenticationService.tokenLogin(token);
-      /*if(_authenticationService.isUserAuthenticated) {
+    if(token != null && expiration != null) {
+      if(DateTime.now().millisecondsSinceEpoch < expiration) {
         await _navigationService.replaceWith(
           Routes.welcomeView,
-          arguments: WelcomeViewArguments(user: _authenticationService.authenticatedUser),
+          arguments: WelcomeView(),
         );
-      }*/
-
-      // pas de moyen de test le token????
-      await _navigationService.replaceWith(
-        Routes.welcomeView,
-        arguments: WelcomeView(),
-      );
+      } else {
+        await _dialogService.showDialog(description: tr(LocaleKeys.login_expire_connexion));
+      }
     }
 
     setBusyRememberLogin(false);

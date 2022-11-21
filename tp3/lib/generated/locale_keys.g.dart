@@ -6,6 +6,7 @@ abstract class  LocaleKeys {
   static const login_user_password_short = 'login.user_password_short';
   static const login_user_email_invalid = 'login.user_email_invalid';
   static const login_cant_create_user = 'login.cant_create_user';
+  static const login_expire_connexion = 'login.expire_connexion';
   static const login = 'login';
   static const app_error = 'app.error';
   static const app = 'app';

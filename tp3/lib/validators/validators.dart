@@ -12,6 +12,7 @@ class Validators {
     return null;
   }
 
+  // pour le regexp
   // https://stackoverflow.com/questions/16800540/how-should-i-check-if-the-input-is-an-email-address-in-flutter
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
@@ -31,6 +32,3 @@ class Validators {
     return null;
   }
 }
-
-//mdp 5 charact min
-//email doit etre valide

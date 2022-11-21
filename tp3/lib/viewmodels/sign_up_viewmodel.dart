@@ -22,6 +22,8 @@ class SignUpViewModel extends BaseViewModel {
       if(_authenticationService.isUserAuthenticated) {
         SharedPreferences.getInstance().then((prefs) { 
           prefs.setString('token', _authenticationService.authenticatedUser.token);
+          DateTime now = DateTime.now().add(const Duration(days: 3));
+          prefs.setInt('expiration', now.millisecondsSinceEpoch);
         });
         await _navigationService.replaceWith(
           Routes.welcomeView,
