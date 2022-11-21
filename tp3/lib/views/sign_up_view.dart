@@ -3,6 +3,7 @@ import 'package:tp3/validators/validators.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tp3/viewmodels/sign_up_viewmodel.dart';
 import 'package:tp3/utils/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({Key? key}) : super(key: key);
@@ -32,7 +33,7 @@ class _SignUpViewState extends State<SignUpView> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                const SizedBox(height: 25),
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: _loginController,
                   validator: (value) => Validators.validateBasicField(value),
@@ -82,6 +83,15 @@ class _SignUpViewState extends State<SignUpView> {
                     )
                     : null,
                 ),
+                const SizedBox(height: 5),
+                GestureDetector(
+                  onTap: () async {
+                    await launchUrl(Uri.parse("https://staging.revolvair.org/assets/tos.html"));
+                    //signUpViewModel.launchURL();
+                  },
+                  child: const Text("Voir les conditions", style: TextStyle(color: Colors.blue),),
+                ),
+                const SizedBox(height: 5),
                 signUpViewModel.isBusy
                   ? const CircularProgressIndicator()
                   : ElevatedButton(

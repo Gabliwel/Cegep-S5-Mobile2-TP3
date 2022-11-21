@@ -20,18 +20,24 @@ class StationDetailsView extends StatelessWidget {
        
         body : viewModel.isBusy
         ? const Center(child: CircularProgressIndicator()) :
-        Container(
-          alignment: Alignment.center,
+        Center(
           child:
         Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children : <Widget>[ 
+            const SizedBox(height: 10,),
             Text("$STATION_NAME ${stationInfo.name}"),
+            const SizedBox(height: 10,),
             Text("$SLUG_NAME ${stationInfo.slugName}"),
+            const SizedBox(height: 10,),
             Text("$SLUG_ID ${stationInfo.slugID}"),
+            const SizedBox(height: 10,),
           (stationInfo.description != null) ? 
              Text("$STATION_DESCRIPTION ${stationInfo.description}") : const Text(NO_STATION_DESCRIPTION),
+             const SizedBox(height: 10,),
              (viewModel.commentNumber == -1)?
             Text("$NUMBER_OF_COMMENT ${stationInfo.commentNumber}") :Text("$NUMBER_OF_COMMENT ${viewModel.commentNumber}") ,
+            const SizedBox(height: 10,),
             Text("$STATION_LAST_MEASURE ${viewModel.pm25Average}"),
               ],
             )
