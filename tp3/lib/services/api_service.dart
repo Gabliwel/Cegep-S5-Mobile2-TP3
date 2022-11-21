@@ -101,21 +101,9 @@ class ApiService {
     print('$revolvair/stations/$slugName/comments');
     var response =
         await client.get(Uri.parse('$revolvair/stations/$slugName/comments'));
-    /* print('Response :');
-    print(response.body); */
-    var parsed = jsonDecode(response.body) as Map<String,dynamic>;
-    /* print('Parsed : ');
-    print(parsed.values.elementAt(0));
-    print(parsed.values.elementAt(0)[0]);
-    print(parsed.values.elementAt(0)[0]['text']); */
 
-    
-    /* for(Comment element in parsed.values.elementAt(0)){
-      print(Comment.fromMap(element));
-      comments.add(Comment(element.id, element.body, element.userId, element.userName));
-    } */
-    /* print(comments); */
-    
+    var parsed = jsonDecode(response.body) as Map<String,dynamic>;
+
     for (var comment in parsed.values.elementAt(0)) {
       print(comment);
       comments.add(Comment.fromMap(comment));
@@ -124,18 +112,22 @@ class ApiService {
     return comments;
   }
 
-  /* Future<List<Comment>> getCommentsForPost(int postId) async {
-    var comments = <Comment>[];
-
+  Future<String> getPM25Raw(String slugName) async {
     var response =
-        await client.get(Uri.parse('$endpoint/comments?postId=$postId'));
-    var parsed = json.decode(response.body) as List<dynamic>;
-    for (var comment in parsed) {
-      comments.add(Comment.fromMap(comment));
+        await client.get(Uri.parse('$revolvair/revolvair/stations/$slugName/measures/pm25_raw/average/month'));
+    print('Reponse : ');
+    print(response.body);
+    print(jsonDecode(response.body));
+    if(jsonDecode(response.body) as Map<String,dynamic> ){
+      return "No value for this month";
     }
-    return comments;
-  } */
+    var parsed = jsonDecode(response.body) as Map<String,dynamic>;
 
+    
+    print(parsed.values.elementAt(0)[0]);
+    print(parsed.values.elementAt(0)[0]['value'].toString());
+    return parsed.values.elementAt(0)[0]['value'].toString();
+  }
 
   Future<List<Station>> fetchActiveStation() async {
   final response = await client

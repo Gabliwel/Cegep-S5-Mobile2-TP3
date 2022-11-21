@@ -5,15 +5,17 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/foundation.dart' as _i9;
+import 'package:flutter/foundation.dart' as _i10;
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i10;
+import 'package:stacked_services/stacked_services.dart' as _i12;
+import 'package:tp3/models/station.dart' as _i11;
 import 'package:tp3/views/about_view.dart' as _i5;
 import 'package:tp3/views/add_comment_view.dart' as _i8;
 import 'package:tp3/views/comments_view.dart' as _i6;
 import 'package:tp3/views/login_view.dart' as _i2;
 import 'package:tp3/views/sign_up_view.dart' as _i3;
+import 'package:tp3/views/station_details_view.dart' as _i9;
 import 'package:tp3/views/stations_view.dart' as _i7;
 import 'package:tp3/views/welcome_view.dart' as _i4;
 
@@ -32,6 +34,8 @@ class Routes {
 
   static const addCommentView = '/add-comment-view';
 
+  static const stationDetailsView = '/station-details-view';
+
   static const all = <String>{
     loginView,
     signUpView,
@@ -40,6 +44,7 @@ class Routes {
     commentsView,
     allStationView,
     addCommentView,
+    stationDetailsView,
   };
 }
 
@@ -72,6 +77,10 @@ class StackedRouter extends _i1.RouterBase {
     _i1.RouteDef(
       Routes.addCommentView,
       page: _i8.AddCommentView,
+    ),
+    _i1.RouteDef(
+      Routes.stationDetailsView,
+      page: _i9.StationDetailsView,
     ),
   ];
 
@@ -122,6 +131,14 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
+    _i9.StationDetailsView: (data) {
+      final args = data.getArgs<StationDetailsViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => _i9.StationDetailsView(
+            key: args.key, stationInfo: args.stationInfo),
+        settings: data,
+      );
+    },
   };
 
   @override
@@ -136,7 +153,7 @@ class CommentsViewArguments {
     required this.slugName,
   });
 
-  final _i9.Key? key;
+  final _i10.Key? key;
 
   final String slugName;
 }
@@ -147,12 +164,23 @@ class AddCommentViewArguments {
     required this.slugName,
   });
 
-  final _i9.Key? key;
+  final _i10.Key? key;
 
   final String slugName;
 }
 
-extension NavigatorStateExtension on _i10.NavigationService {
+class StationDetailsViewArguments {
+  const StationDetailsViewArguments({
+    this.key,
+    required this.stationInfo,
+  });
+
+  final _i10.Key? key;
+
+  final _i11.Station stationInfo;
+}
+
+extension NavigatorStateExtension on _i12.NavigationService {
   Future<dynamic> navigateToLoginView([
     int? routerId,
     bool preventDuplicates = true,
@@ -210,7 +238,7 @@ extension NavigatorStateExtension on _i10.NavigationService {
   }
 
   Future<dynamic> navigateToCommentsView({
-    _i9.Key? key,
+    _i10.Key? key,
     required String slugName,
     int? routerId,
     bool preventDuplicates = true,
@@ -241,7 +269,7 @@ extension NavigatorStateExtension on _i10.NavigationService {
   }
 
   Future<dynamic> navigateToAddCommentView({
-    _i9.Key? key,
+    _i10.Key? key,
     required String slugName,
     int? routerId,
     bool preventDuplicates = true,
@@ -251,6 +279,24 @@ extension NavigatorStateExtension on _i10.NavigationService {
   }) async {
     return navigateTo<dynamic>(Routes.addCommentView,
         arguments: AddCommentViewArguments(key: key, slugName: slugName),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToStationDetailsView({
+    _i10.Key? key,
+    required _i11.Station stationInfo,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo<dynamic>(Routes.stationDetailsView,
+        arguments:
+            StationDetailsViewArguments(key: key, stationInfo: stationInfo),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

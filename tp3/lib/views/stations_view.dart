@@ -77,7 +77,7 @@ class _AllStationViewState extends State<AllStationView> {
                   ),
                 ),
                 onTap: () async {  
-                  viewModel.sendToCommentPage(viewModel.stations.elementAt(index).slugName);
+                  viewModel.sendToDetailPage(viewModel.stations.elementAt(index));
                 }
               );
             }

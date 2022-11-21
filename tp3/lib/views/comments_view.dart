@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tp3/viewmodels/comments_viewmodel.dart';
 import 'package:tp3/widgets/custom_comment_list_tile.dart';
-import 'package:tp3/widgets/post_item.dart';
+
 
 class CommentsView extends StatelessWidget {
   final String slugName;

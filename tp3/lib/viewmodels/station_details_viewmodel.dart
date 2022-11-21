@@ -16,17 +16,18 @@ import '../app/app.router.dart';
 import '../models/station.dart';
 
 
-class StationsViewModel extends BaseViewModel {
+class StationDetailsViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _api_service = locator<ApiService>();
   final _dialogService = locator<DialogService>();
   final _authenticationService = locator<AuthenticationService>();
-  List<Station> stations = [];
+  String pm25Average = "";
 
-  Future fetchAllStation() async {
+ 
+  Future getPM25MonthAverage(String stationSlug)async {
     setBusy(true);
     try {
-      stations  = await _api_service.fetchActiveStation();
+      pm25Average  = await _api_service.getPM25Raw(stationSlug);
     } catch (e) {
       await _dialogService.showDialog(description: tr(LocaleKeys.app_error));
     } finally {
@@ -34,12 +35,18 @@ class StationsViewModel extends BaseViewModel {
     }
   }
 
-  Future sendToDetailPage(Station stationSlug) async {
-    await _navigationService.navigateTo(Routes.stationDetailsView, arguments: StationDetailsViewArguments(stationInfo: stationSlug));
+  void goToAbout() async {
+    await _navigationService.navigateTo(
+      Routes.aboutView,
+      arguments: const AboutView(),
+    );
   }
 
-  Future sendToCommentPage(String stationSlug) async {
-    await _navigationService.navigateTo(Routes.commentsView, arguments: CommentsViewArguments(slugName: stationSlug))?.then((value) => fetchAllStation());
+  void goToWelcome() async {
+    await _navigationService.replaceWith(
+      Routes.welcomeView,
+      arguments: const WelcomeView(),
+    );
   }
 
   void disconnect() async {
@@ -54,21 +61,12 @@ class StationsViewModel extends BaseViewModel {
     }
     await _navigationService.replaceWith(
       Routes.loginView,
-      arguments: LoginView(),
+      arguments: const LoginView(),
     );
   }
 
-  void goToAbout() async {
-    await _navigationService.navigateTo(
-      Routes.aboutView,
-      arguments: AboutView(),
-    );
-  }
 
-  void goToWelcome() async {
-    await _navigationService.replaceWith(
-      Routes.welcomeView,
-      arguments: WelcomeView(),
-    );
-  }
+  /* Future sendToCommentPage(String stationSlug) async {
+    await _navigationService.navigateTo(Routes.commentsView, arguments: CommentsViewArguments(slugName: stationSlug))?.then((value) => fetchAllStation());
+  } */
 }
