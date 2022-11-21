@@ -11,6 +11,7 @@ import 'package:tp3/services/api_service.dart';
 import 'package:tp3/views/about_view.dart';
 import 'package:tp3/views/login_view.dart';
 import 'package:tp3/views/welcome_view.dart';
+import 'package:tp3/utils/constants.dart';
 
 import '../app/app.router.dart';
 import '../models/station.dart';
@@ -28,12 +29,29 @@ class StationDetailsViewModel extends BaseViewModel {
     setBusy(true);
     try {
       pm25Average  = await _api_service.getPM25Raw(stationSlug);
+      if(pm25Average == ""){
+        pm25Average = NO_MEASURE_FOR_LAST_MONTH;
+      }
     } catch (e) {
       await _dialogService.showDialog(description: tr(LocaleKeys.app_error));
     } finally {
       setBusy(false);
     }
   }
+
+  /* Future getCommentNumber(String stationSlug)async {
+    setBusy(true);
+    try {
+      pm25Average  = await _api_service.getPM25Raw(stationSlug);
+      if(pm25Average == ""){
+        pm25Average = NO_MEASURE_FOR_LAST_MONTH;
+      }
+    } catch (e) {
+      await _dialogService.showDialog(description: tr(LocaleKeys.app_error));
+    } finally {
+      setBusy(false);
+    }
+  } */
 
   void goToAbout() async {
     await _navigationService.navigateTo(
@@ -66,6 +84,6 @@ class StationDetailsViewModel extends BaseViewModel {
   }
 
   Future sendToCommentPage(String stationSlug) async {
-    await _navigationService.navigateTo(Routes.commentsView, arguments: CommentsViewArguments(slugName: stationSlug));
+    await _navigationService.navigateTo(Routes.commentsView, arguments: CommentsViewArguments(slugName: stationSlug))?.then((value) => getPM25MonthAverage(stationSlug));
   }
 }

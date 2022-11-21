@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tp3/validators/validators.dart';
-import 'package:tp3/viewmodels/login_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tp3/viewmodels/sign_up_viewmodel.dart';
+import 'package:tp3/utils/constants.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({Key? key}) : super(key: key);
@@ -24,9 +24,8 @@ class _SignUpViewState extends State<SignUpView> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<SignUpViewModel>.reactive(
       viewModelBuilder: () => SignUpViewModel(),
-      // onModelReady: (viewModel) => viewModel.initialize(),
       builder: (context, signUpViewModel, child) => Scaffold(
-        appBar: AppBar(title: const Text("Inscription"),),
+        appBar: AppBar(title: const Text(INSCRIPTION_LABEL),),
         body: Form(
           key: _formKey,
           child: Center(
@@ -38,7 +37,7 @@ class _SignUpViewState extends State<SignUpView> {
                   controller: _loginController,
                   validator: (value) => Validators.validateBasicField(value),
                   decoration: const InputDecoration(
-                    labelText: "Nom",
+                    labelText: NAME_LABEL,
                     border: OutlineInputBorder(), 
                     contentPadding: EdgeInsets.fromLTRB(10, 18, 10, 18)
                   ),
@@ -48,7 +47,7 @@ class _SignUpViewState extends State<SignUpView> {
                   controller: _loginController2,
                   validator: (value) => Validators.validateEmail(value),
                   decoration: const InputDecoration(
-                    labelText: "Email",
+                    labelText: EMAIL_LABEL,
                     border: OutlineInputBorder(), 
                     contentPadding: EdgeInsets.fromLTRB(10, 18, 10, 18)
                   ),
@@ -58,7 +57,7 @@ class _SignUpViewState extends State<SignUpView> {
                   controller: _loginController3,
                   validator: (value) => Validators.validatePassword(value),
                   decoration: const InputDecoration(
-                    labelText: "Mot de passe",
+                    labelText: PASSWORD_LABEL,
                     border: OutlineInputBorder(), 
                     contentPadding: EdgeInsets.fromLTRB(10, 18, 10, 18)
                   ),
@@ -69,7 +68,7 @@ class _SignUpViewState extends State<SignUpView> {
                 const SizedBox(height: 5),
                 CheckboxListTile(
                   value: _termsChecked,
-                  title: const Text("J'accepte les termes et conditions."),
+                  title: const Text(TERMS_AND_CONDITION_ACCEPT),
                   onChanged: (newValue) {
                     setState(() {
                       _termsChecked = newValue!;
@@ -79,14 +78,14 @@ class _SignUpViewState extends State<SignUpView> {
                   subtitle: !_termsChecked && _showErrorTerms
                     ? const Padding(
                       padding: EdgeInsets.fromLTRB(12.0, 0, 0, 0), 
-                      child: Text('Obligatoire', style: TextStyle(color: Color(0xFFe53935), fontSize: 12),),
+                      child: Text(OBLIGATORY, style: TextStyle(color: Color(0xFFe53935), fontSize: 12),),
                     )
                     : null,
                 ),
                 signUpViewModel.isBusy
                   ? const CircularProgressIndicator()
                   : ElevatedButton(
-                      child: const Text('Créer le compte'),
+                      child: const Text(CREATE_ACCOUNT_LABEL),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           if(!_termsChecked) {

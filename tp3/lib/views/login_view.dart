@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tp3/validators/validators.dart';
 import 'package:tp3/viewmodels/login_viewmodel.dart';
 import 'package:stacked/stacked.dart';
+import 'package:tp3/utils/constants.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class _LoginViewState extends State<LoginView> {
       onModelReady: (viewModel) => viewModel.rememberMeLogin(),
       // onModelReady: (viewModel) => viewModel.initialize(),
       builder: (context, loginViewModel, child) => Scaffold(
-        appBar: AppBar(title: const Text("Connexion"), automaticallyImplyLeading: false),
+        appBar: AppBar(title: const Text(CONNEXION), automaticallyImplyLeading: false),
         body: Form(
           key: _formKey,
           child: Center(
@@ -42,13 +43,13 @@ class _LoginViewState extends State<LoginView> {
                 loginViewModel.rememberMeLoginAction
                   ? const CircularProgressIndicator()
                   : Column(children: [
-                Image.asset("assets/images/revolvair-logo.jpg"),
+                Image.asset(REVOLVAIR_LOGO_PATH),
                 const SizedBox(height: 25),
                 TextFormField(
                   controller: _loginController,
                   validator: (value) => Validators.validateEmail(value),
                   decoration: const InputDecoration(
-                    labelText: "Courriel",
+                    labelText: MAIL_LABEL,
                     border: OutlineInputBorder(), 
                     contentPadding: EdgeInsets.fromLTRB(12, 24, 12, 24)
                   ),
@@ -58,7 +59,7 @@ class _LoginViewState extends State<LoginView> {
                   controller: _loginController2,
                   validator: (value) => Validators.validatePassword(value),
                   decoration: const InputDecoration(
-                    labelText: "Mot de passe",
+                    labelText: PASSWORD_LABEL,
                     border: OutlineInputBorder(), 
                     contentPadding: EdgeInsets.fromLTRB(12, 24, 12, 24)
                   ),
@@ -70,7 +71,7 @@ class _LoginViewState extends State<LoginView> {
                 loginViewModel.isBusy
                   ? const CircularProgressIndicator()
                   : ElevatedButton(
-                      child: const Text('Se connecter'),
+                      child: const Text(CONNECT),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           loginViewModel.login(_loginController.text, _loginController2.text);
@@ -78,7 +79,7 @@ class _LoginViewState extends State<LoginView> {
                       }
                     ),
                 ElevatedButton(
-                  child: const Text('Je n\'ai pas de compte'),
+                  child: const Text(NO_ACCOUNT_LABEL),
                   onPressed: () {
                     loginViewModel.signUp();
                   }

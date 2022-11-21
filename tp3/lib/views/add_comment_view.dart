@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tp3/validators/validators.dart';
 import 'package:tp3/viewmodels/add_comment_viewmodel.dart';
-import 'package:tp3/viewmodels/login_viewmodel.dart';
 import 'package:stacked/stacked.dart';
+import 'package:tp3/utils/constants.dart';
 
 class AddCommentView extends StatefulWidget {
   final String slugName;
@@ -23,7 +23,7 @@ class _AddCommentView extends State<AddCommentView> {
       viewModelBuilder: () => AddCommentModel(),
       // onModelReady: (viewModel) => viewModel.initialize(),
       builder: (context, viewModel, child) => Scaffold(
-        appBar: AppBar(title: const Text("Ajouter un commentaire")),
+        appBar: AppBar(title: const Text(ADD_COMMENT_TITLE)),
         body: Form(
           key: _formKey,
           child: Center(
@@ -35,7 +35,7 @@ class _AddCommentView extends State<AddCommentView> {
                   controller: _commentController,
                   validator: (value) => Validators.validateBasicField(value),
                   decoration: const InputDecoration(
-                    labelText: "Commentaire",
+                    labelText: COMMENT_LABEL,
                     border: OutlineInputBorder(), 
                     contentPadding: EdgeInsets.fromLTRB(12, 24, 12, 24)
                   ),
@@ -44,7 +44,7 @@ class _AddCommentView extends State<AddCommentView> {
                 viewModel.isBusy
                   ? const CircularProgressIndicator()
                   : ElevatedButton(
-                      child: const Text('Ajouter'),
+                      child: const Text(ADD_COMMENT),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           bool success = await viewModel.addComment(_commentController.text, widget.slugName);

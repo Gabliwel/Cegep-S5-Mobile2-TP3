@@ -9,6 +9,7 @@ import 'package:tp3/models/comment.dart';
 import 'package:tp3/models/user.dart';
 import 'package:tp3/utils/maybe.dart';
 import 'package:tp3/models/station.dart';
+import "package:tp3/utils/constants.dart";
 
 class ApiService {
   var client = locator<http.Client>();
@@ -120,13 +121,11 @@ class ApiService {
     print(jsonDecode(response.body));
     var parsed = jsonDecode(response.body) as Map<String,dynamic>;
 
-    
-
     try{
       return parsed.values.elementAt(0)[0]['value'].toString();
 
     }catch(e){
-    return "There is no value for this month";
+      return "";
     }
   }
 
@@ -137,7 +136,7 @@ class ApiService {
       print(jsonDecode(response.body));
       return Station.getAllActiveStation(Station.getAllStation(jsonDecode(response.body)));
     } else {
-      throw Exception('Failed to load actives station');
+      throw Exception('Failed to load stations');
     } 
   }
 

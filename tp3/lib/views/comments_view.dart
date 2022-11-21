@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tp3/viewmodels/comments_viewmodel.dart';
 import 'package:tp3/widgets/custom_comment_list_tile.dart';
-
+import 'package:tp3/utils/constants.dart';
 
 class CommentsView extends StatelessWidget {
   final String slugName;
@@ -16,7 +16,7 @@ class CommentsView extends StatelessWidget {
       onModelReady: (viewModel) => viewModel.getComments(slugName), 
       builder: (context, viewModel, child) => Scaffold(
         appBar: AppBar(
-          title: Text("Commentaire pour $slugName"),
+          title: Text("$COMMENT_FOR $slugName"),
           backgroundColor: Colors.blue,
         ),
         body : 
@@ -38,7 +38,7 @@ class CommentsView extends StatelessWidget {
                 )
               ): 
               const Expanded(
-                child: Center(child: Text("Aucun commentaire"))
+                child: Center(child: Text(NO_COMMENT))
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,

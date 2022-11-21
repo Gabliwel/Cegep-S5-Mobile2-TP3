@@ -5,6 +5,7 @@ import 'package:stacked/stacked.dart';
 import 'package:tp3/models/user.dart';
 import 'package:tp3/viewmodels/welcome_viewmodel.dart';
 import 'package:tp3/views/about_view.dart';
+import 'package:tp3/utils/constants.dart';
 
 class WelcomeView extends StatelessWidget {
   const WelcomeView({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class WelcomeView extends StatelessWidget {
     return ViewModelBuilder<WelcomeViewModel>.reactive(
       viewModelBuilder: () => WelcomeViewModel(),
       builder: (BuildContext context, viewModel, Widget? child) => Scaffold(
-        appBar: AppBar(title: const Text("RevolvAir.org")),
+        appBar: AppBar(title: const Text(SITE_URL)),
         drawer: Drawer(
           child: ListView(
           // Important: Remove any padding from the ListView.
@@ -24,17 +25,17 @@ class WelcomeView extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.blue,
               ),
-              child: Text('Menu'),
+              child: Text(MENU_LABEL),
             ),
             ListTile(
-              title: const Text('À propos'),
+              title: const Text(ABOUT_LABEL),
               onTap: () {
                 Navigator.pop(context);
                 viewModel.goToAbout();
               },
             ),
             ListTile(
-              title: const Text('Se déconnecter'),
+              title: const Text(DISCONNECT),
               onTap: () {
                 Navigator.pop(context);
                 viewModel.disconnect();
@@ -46,7 +47,7 @@ class WelcomeView extends StatelessWidget {
           child: Column(
             children: const [
               Text(
-                'Bonjour!',
+                WELCOME_TEXT,
                 style: TextStyle(
                   height: 2, 
                   fontSize: 20
@@ -61,11 +62,11 @@ class WelcomeView extends StatelessWidget {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: 'Stations',
+              label: HOME,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.vertical_split_sharp),
-              label: 'Stations',
+              label: STATIONS,
             ),
           ],
           currentIndex: 0,

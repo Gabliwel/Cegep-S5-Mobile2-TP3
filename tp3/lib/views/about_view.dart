@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tp3/viewmodels/about_viewmodel.dart';
-import 'package:tp3/viewmodels/welcome_viewmodel.dart';
+import 'package:tp3/utils/constants.dart';
 
 class AboutView extends StatelessWidget {
   const AboutView({Key? key}) : super(key: key);
@@ -17,14 +17,14 @@ class AboutView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: const [
               SizedBox(height: 10,),
-              Text("Application développée dans le cadre du cours"),
-              Text("420-50-SF - Développement mobile et objets connectés"),
+              Text(DEVELOPPED_FOR),
+              Text(SCHOOL_NAME),
               SizedBox(height: 15,),
-              Text("Cégep de Sainte-Foy"),
-              Text("Automne 2022"),
+              Text(SCHOOL_NAME),
+              Text(SESSION_ID),
               SizedBox(height: 15,),
-              Text("Application mobile développée par"),
-              Text("Gabriel Bertrand et Keven Champagne")
+              Text(DEVELOPPED_BY),
+              Text(DEVS_NAME)
             ],
           ),
         )  

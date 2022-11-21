@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:stacked/stacked.dart';
 import 'package:tp3/models/station.dart';
+import 'package:tp3/utils/constants.dart';
 import 'package:tp3/viewmodels/station_viewmodel.dart';
 import 'package:tp3/views/comments_view.dart';
 import 'package:tp3/widgets/search_bar_widget.dart';
@@ -24,7 +25,7 @@ class _AllStationViewState extends State<AllStationView> {
       onModelReady: (viewModel) => viewModel.fetchAllStation(), 
       builder: (context, viewModel, child) => Scaffold(
         appBar: AppBar(
-          title: const Text("Stations"),
+          title: const Text(STATIONS_LABEL),
           actions: [
             IconButton(
               onPressed: (){
@@ -41,17 +42,17 @@ class _AllStationViewState extends State<AllStationView> {
               decoration: BoxDecoration(
                 color: Colors.blue,
               ),
-              child: Text('Menu'),
+              child: Text(MENU_LABEL),
             ),
             ListTile(
-              title: const Text('À propos'),
+              title: const Text(ABOUT_LABEL),
               onTap: () {
                 Navigator.pop(context);
                 viewModel.goToAbout();
               },
             ),
             ListTile(
-              title: const Text('Se déconnecter'),
+              title: const Text(DISCONNECT),
               onTap: () {
                 Navigator.pop(context);
                 viewModel.disconnect();
@@ -70,7 +71,6 @@ class _AllStationViewState extends State<AllStationView> {
                 key: ValueKey<int>(( viewModel.stations.elementAt(index).slugID)),
                 child: Card(
                   child: ListTile(
-                    trailing: Text('Comment count : ${viewModel.stations.elementAt(index).commentNumber}'),
                     title: Text("${ viewModel.stations.elementAt(index).slugID} - ${ viewModel.stations.elementAt(index).name}"),
                     subtitle: ( viewModel.stations.elementAt(index).description != null) ? 
                     Text('${ viewModel.stations.elementAt(index).description}'): null
@@ -89,11 +89,11 @@ class _AllStationViewState extends State<AllStationView> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: 'Accueil',
+              label: HOME,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.vertical_split_sharp),
-              label: 'Stations',
+              label: STATIONS,
             ),
           ],
           currentIndex: 1,
