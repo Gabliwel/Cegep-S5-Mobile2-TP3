@@ -4,7 +4,8 @@
         "user_not_empty": "Ne peut être vide.",
         "user_password_short": "Ne peut avoir moins de 5 charactères.",
         "user_email_invalid": "Adresse courriel invalide.",
-        "cant_create_user": "Impossible de créer le compte, veuillez vérifier vos informations."
+        "cant_create_user": "Impossible de créer le compte, veuillez vérifier vos informations.",
+        "expire_connexion": "La connexion est expiré, veuillez vous reconnecter."
     },
     "app": {
         "error": "L'action demandée a provoquée une erreur. Communiquez avec les développeurs si l'erreur persiste."

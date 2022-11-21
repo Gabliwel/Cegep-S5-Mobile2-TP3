@@ -47,6 +47,7 @@ class StationsViewModel extends BaseViewModel {
 
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove('token');
+      await prefs.remove('expiration');
     }
     await _navigationService.replaceWith(
       Routes.loginView,

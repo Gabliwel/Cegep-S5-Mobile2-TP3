@@ -28,4 +28,22 @@ main() {
       expect(() => maybe.value, throwsStateError);
     });
   });
+  group('MayBe - warning', () {
+    test('par défaut, warning est null.', () {
+      var maybe = MayBe.empty();
+
+      expect(maybe.warning, null);
+    });
+    test('quand on donne un warning, le maybe guarde cette valeur.', () {
+      var maybe = MayBe.empty();
+      maybe.setWarning("a");
+      expect(maybe.warning, "a");
+    });
+    test('quand on clear de warning, le warning est null.', () {
+      var maybe = MayBe.empty();
+      maybe.setWarning("a");
+      maybe.clearWarning();
+      expect(maybe.warning, null);
+    });
+  });
 }
