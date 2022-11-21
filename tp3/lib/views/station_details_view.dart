@@ -30,7 +30,8 @@ class StationDetailsView extends StatelessWidget {
             Text("$SLUG_ID ${stationInfo.slugID}"),
           (stationInfo.description != null) ? 
              Text("$STATION_DESCRIPTION ${stationInfo.description}") : const Text(NO_STATION_DESCRIPTION),
-            Text("$NUMBER_OF_COMMENT ${stationInfo.commentNumber}"),
+             (viewModel.commentNumber == -1)?
+            Text("$NUMBER_OF_COMMENT ${stationInfo.commentNumber}") :Text("$NUMBER_OF_COMMENT ${viewModel.commentNumber}") ,
             Text("$STATION_LAST_MEASURE ${viewModel.pm25Average}"),
               ],
             )

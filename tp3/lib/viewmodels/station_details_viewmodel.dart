@@ -6,6 +6,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tp3/app/app.locator.dart';
 import 'package:tp3/generated/locale_keys.g.dart';
+import 'package:tp3/models/comment.dart';
 import 'package:tp3/services/authentication_service.dart';
 import 'package:tp3/services/api_service.dart';
 import 'package:tp3/views/about_view.dart';
@@ -23,6 +24,8 @@ class StationDetailsViewModel extends BaseViewModel {
   final _dialogService = locator<DialogService>();
   final _authenticationService = locator<AuthenticationService>();
   String pm25Average = "";
+  List<Comment> commentList = List.empty(growable: true);
+  int commentNumber = -1;
 
  
   Future getPM25MonthAverage(String stationSlug)async {
@@ -39,19 +42,18 @@ class StationDetailsViewModel extends BaseViewModel {
     }
   }
 
-  /* Future getCommentNumber(String stationSlug)async {
+  Future getCommentNumber(String stationSlug)async {
     setBusy(true);
     try {
-      pm25Average  = await _api_service.getPM25Raw(stationSlug);
-      if(pm25Average == ""){
-        pm25Average = NO_MEASURE_FOR_LAST_MONTH;
-      }
+      commentNumber = -1;
+      commentList  = await _api_service.getCommentsForSlug(stationSlug);
+      commentNumber = commentList.length;
     } catch (e) {
       await _dialogService.showDialog(description: tr(LocaleKeys.app_error));
     } finally {
       setBusy(false);
     }
-  } */
+  }
 
   void goToAbout() async {
     await _navigationService.navigateTo(
@@ -84,6 +86,6 @@ class StationDetailsViewModel extends BaseViewModel {
   }
 
   Future sendToCommentPage(String stationSlug) async {
-    await _navigationService.navigateTo(Routes.commentsView, arguments: CommentsViewArguments(slugName: stationSlug))?.then((value) => getPM25MonthAverage(stationSlug));
+    await _navigationService.navigateTo(Routes.commentsView, arguments: CommentsViewArguments(slugName: stationSlug))?.then((value) => getCommentNumber(stationSlug));
   }
 }
