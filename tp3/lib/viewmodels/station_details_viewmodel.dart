@@ -39,7 +39,7 @@ class StationDetailsViewModel extends BaseViewModel {
     }
   }
 
-  /* Future getCommentNumber(String stationSlug)async {
+  Future getCommentNumber(String stationSlug)async {
     setBusy(true);
     try {
       pm25Average  = await _api_service.getPM25Raw(stationSlug);
@@ -51,7 +51,7 @@ class StationDetailsViewModel extends BaseViewModel {
     } finally {
       setBusy(false);
     }
-  } */
+  }
 
   void goToAbout() async {
     await _navigationService.navigateTo(
@@ -84,6 +84,6 @@ class StationDetailsViewModel extends BaseViewModel {
   }
 
   Future sendToCommentPage(String stationSlug) async {
-    await _navigationService.navigateTo(Routes.commentsView, arguments: CommentsViewArguments(slugName: stationSlug))?.then((value) => getPM25MonthAverage(stationSlug));
+    await _navigationService.navigateTo(Routes.commentsView, arguments: CommentsViewArguments(slugName: stationSlug))?.then((value) => getCommentNumber(stationSlug));
   }
 }

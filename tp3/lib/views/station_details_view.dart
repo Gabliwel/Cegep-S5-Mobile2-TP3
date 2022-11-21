@@ -23,7 +23,7 @@ class StationDetailsView extends StatelessWidget {
         Container(
           alignment: Alignment.center,
           child:
-        Column(           
+        Column(
           children : <Widget>[ 
             Text("$STATION_NAME ${stationInfo.name}"),
             Text("$SLUG_NAME ${stationInfo.slugName}"),

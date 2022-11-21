@@ -62,14 +62,13 @@ class SearchBar extends SearchDelegate{
                   key: ValueKey<int>(( result.slugID)),
                   child: Card(
                     child: ListTile(
-                      trailing: Text('Comment count : ${result.commentNumber}'),
                       title: Text("${ result.slugID} - ${ result.name}"),
                       subtitle: ( result.description != null) ? 
                       Text('${ result.description}'): null
                     ),
                   ),
                 onTap: () async {  
-                  stationViewModel.sendToCommentPage(result.slugName);
+                  stationViewModel.sendToDetailPage(result);
                 }
               );
       },

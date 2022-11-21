@@ -35,11 +35,7 @@ class StationsViewModel extends BaseViewModel {
   }
 
   Future sendToDetailPage(Station stationSlug) async {
-    await _navigationService.navigateTo(Routes.stationDetailsView, arguments: StationDetailsViewArguments(stationInfo: stationSlug));
-  }
-
-  Future sendToCommentPage(String stationSlug) async {
-    await _navigationService.navigateTo(Routes.commentsView, arguments: CommentsViewArguments(slugName: stationSlug))?.then((value) => fetchAllStation());
+    await _navigationService.navigateTo(Routes.stationDetailsView, arguments: StationDetailsViewArguments(stationInfo: stationSlug))?.then((value) => fetchAllStation());
   }
 
   void disconnect() async {
@@ -63,7 +59,7 @@ class StationsViewModel extends BaseViewModel {
     await _navigationService.navigateTo(
       Routes.aboutView,
       arguments: AboutView(),
-    );
+    )?.then((value) => fetchAllStation());
   }
 
   void goToWelcome() async {
