@@ -34,6 +34,15 @@ class User {
 
   factory User.fromJson(String source) => User.fromMap(json.decode(source));
 
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': username,
+      'token': token,
+    };
+  }
+
+  String toJson() => json.encode(toMap());
   @override
   String toString() => 'User(id: $id, username: $username, token: $token)';
 
