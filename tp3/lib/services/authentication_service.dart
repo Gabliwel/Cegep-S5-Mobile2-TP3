@@ -17,10 +17,6 @@ class AuthenticationService {
     _authenticatedUser = await _apiService.getUserProfile(email, password);
   }
 
-  Future tokenLogin(String token) async {
-    _authenticatedUser = await _apiService.getUserProfileWithToken(token);
-  }
-
   Future signUp(String name, String email, String password) async {
     _authenticatedUser = await _apiService.createUserProfile(name, email, password);
   }

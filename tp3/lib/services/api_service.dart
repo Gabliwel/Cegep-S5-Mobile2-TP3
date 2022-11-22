@@ -21,33 +21,11 @@ class ApiService {
 
   Future<MayBe<User>> getUserProfile(String email, String password) async {
     var body = json.encode({"email": email, "password": password});
-    const Map<String,String> headers = {
-      'Content-type' : 'application/json', 
-      'Accept': 'application/json',
-    };
     
     var response = await client.post(Uri.parse('$revolvair/login'), body: body, headers: headers);
     log(response.statusCode.toString());
 
     if (response.statusCode != 200) {
-      return MayBe.empty();
-    }
-
-    final user = User.fromJson(response.body);
-    return MayBe(user);
-  }
-
-  Future<MayBe<User>> getUserProfileWithToken(String token) async {
-    final Map<String,String> headerForBearer = {
-      'Content-type' : 'application/json', 
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-    
-    var response = await client.get(Uri.parse('$revolvair/login'), headers: headerForBearer);
-    log(response.statusCode.toString());
-
-    if (response.statusCode == 404) {
       return MayBe.empty();
     }
 
