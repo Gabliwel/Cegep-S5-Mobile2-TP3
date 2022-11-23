@@ -5,6 +5,8 @@ import 'package:http/http.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:tp3/app/app.locator.dart';
+import 'package:tp3/models/comment.dart';
+import 'package:tp3/models/station.dart';
 import 'package:tp3/models/user.dart';
 import 'package:tp3/services/api_service.dart';
 import 'package:tp3/utils/maybe.dart';
@@ -176,5 +178,104 @@ void main() {
       MayBe<User> response = await apiService.logoutUser(user);
       expect(response.hasValue(), false);
     });
-  });
+  
+});
+  group('API Service - getCommentsForSlug', (){
+test("getCommentForSlug retourne la liste de commentaire avec le mauvais nom de station, soit 0", () async {
+      String commentJson = jsonEncode({
+      "id": 31,
+      "text": "bonsoir a tous, petit comment",
+      "name": "test"});
+      String slugName = 'cegep-de-sainte-foyeeeeeeeeeeeeeeeeee';
+      when(_mockClientService.get(
+        Uri.parse('$revolvair/stations/$slugName/comments'),
+      )).thenAnswer((_) async =>
+        http.Response('{"data" : []}',404)
+      );
+      final apiService = ApiService();
+
+      List<Comment> response = await apiService.getCommentsForSlug(slugName);
+      expect(response.length, 0);
+    });
+
+
+  test("getCommentForSlug retourne la liste de commentaire de la station ayant le nom en question", () async {
+      String commentJson = jsonEncode({
+      "id": 31,
+      "text": "bonsoir a tous, petit comment",
+      "name": "test",
+      "user_id" : 21,
+      "created_at" : "01/12/12"});
+      String slugName = 'cegep-de-sainte-foyeeeeeeeeeeeeeeeeee';
+      when(_mockClientService.get(
+        Uri.parse('$revolvair/stations/$slugName/comments'),
+      )).thenAnswer((_) async =>
+        http.Response('{"data" : [$commentJson]}',200)
+      );
+      final apiService = ApiService();
+
+      List<Comment> response = await apiService.getCommentsForSlug(slugName);
+      expect(response.length, 1);
+    });
+});
+
+group('API Service - getPM25Raw', (){
+test("getPM25Raw retourne la moyenne des mesures du dernier mois de la station en question", () async {
+      String pm25_raw= jsonEncode({
+      "value" : "32"});
+      String slugName = 'cegep-de-sainte-foy';
+      when(_mockClientService.get(
+        Uri.parse('$revolvair/revolvair/stations/$slugName/measures/pm25_raw/average/month'),
+      )).thenAnswer((_) async =>
+        http.Response('{"data" : [$pm25_raw]}',200)
+      );
+      final apiService = ApiService();
+
+      String response = await apiService.getPM25Raw(slugName);
+      expect(response, 32.toString());
+    });
+
+
+  test("getPM25Raw retourne une string vide si la station n'existe pas", () async {
+      String slugName = 'cegep-de-sainte-foy33333333333333333333333333';
+      when(_mockClientService.get(
+        Uri.parse('$revolvair/revolvair/stations/$slugName/measures/pm25_raw/average/month'),
+      )).thenAnswer((_) async =>
+        http.Response('{"data" : []}',200)
+      );
+      final apiService = ApiService();
+
+      String response = await apiService.getPM25Raw(slugName);
+      expect(response, "");
+    });
+});
+
+group('API Service - fetchActiveStation', (){
+test("Retourne la liste de toutes les stations", () async {
+      String stationToJson= jsonEncode({"name": "test", "comment_count": 2, "description": "test", "user_id":  2,"slugID": 2,"slug": "test"});
+      when(_mockClientService.get(
+        Uri.parse('$revolvair/revolvair/stations/'),
+      )).thenAnswer((_) async =>
+        http.Response('{"data" : [$stationToJson]}',200)
+      );
+      final apiService = ApiService();
+
+      List<Station> response = await apiService.fetchActiveStation();
+      expect(response.length, 0);
+    });
+
+
+  test("Retourne une liste vide s'il n'y a aucune station active", () async {
+     
+      when(_mockClientService.get(
+        Uri.parse('$revolvair/revolvair/stations/'),
+      )).thenAnswer((_) async =>
+        http.Response('{"data" : []}',200)
+      );
+      final apiService = ApiService();
+
+      List<Station> response = await apiService.fetchActiveStation();
+      expect(response.length, 0);
+    });
+});
 }
