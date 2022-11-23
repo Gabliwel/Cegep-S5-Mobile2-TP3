@@ -9,6 +9,7 @@ import 'package:tp3/app/app.router.dart';
 import 'package:tp3/generated/locale_keys.g.dart';
 import 'package:tp3/models/user.dart';
 import 'package:tp3/services/authentication_service.dart';
+import 'package:tp3/utils/shared_preferences_util.dart';
 import 'package:tp3/viewmodels/welcome_viewmodel.dart';
 import 'package:tp3/views/stations_view.dart';
 import 'package:tp3/views/welcome_view.dart';
@@ -17,6 +18,7 @@ class LoginViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _authenticationService = locator<AuthenticationService>();
   final _dialogService = locator<DialogService>();
+  final _sharedPref = locator<SharedPreferencesUtils>();
 
   bool rememberMeLoginAction = false;
 
@@ -27,12 +29,9 @@ class LoginViewModel extends BaseViewModel {
       log(_authenticationService.isUserAuthenticated.toString());
       if (_authenticationService.isUserAuthenticated) {
         log(_authenticationService.authenticatedUser.token);
-        SharedPreferences.getInstance().then((prefs) { 
-          prefs.setString('token', _authenticationService.authenticatedUser.token);
-          DateTime now = DateTime.now().add(const Duration(days: 3));
-          prefs.setInt('expiration', now.millisecondsSinceEpoch);
-        });
-        
+        DateTime now = DateTime.now().add(const Duration(days: 3));
+        _sharedPref.setToken(_authenticationService.authenticatedUser.token);
+        _sharedPref.setExpiration(now.millisecondsSinceEpoch);
         await _navigationService.replaceWith(
           Routes.welcomeView,
           arguments: WelcomeView(),
@@ -54,11 +53,12 @@ class LoginViewModel extends BaseViewModel {
   void rememberMeLogin() async {
     setBusyRememberLogin(true);
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString("token");
-    int? expiration = prefs.getInt("expiration");
+    String? token = await _sharedPref.getToken();
+    int? expiration = await _sharedPref.getExpiration();
 
     if(token != null && expiration != null) {
+      log(token);
+      log(expiration.toString());
       if(DateTime.now().millisecondsSinceEpoch < expiration) {
         await _navigationService.replaceWith(
           Routes.welcomeView,

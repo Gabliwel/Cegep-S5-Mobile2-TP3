@@ -5,6 +5,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:http/http.dart' as http;
 import 'package:tp3/services/api_service.dart';
 import 'package:tp3/services/authentication_service.dart';
+import 'package:tp3/utils/shared_preferences_util.dart';
 import 'package:tp3/viewmodels/station_details_viewmodel.dart';
 import 'package:tp3/views/about_view.dart';
 import 'package:tp3/views/add_comment_view.dart';
@@ -38,7 +39,8 @@ import 'package:tp3/views/stations_view.dart';
     LazySingleton(classType: DialogService),
     LazySingleton(classType: http.Client),
     LazySingleton(classType: ApiService),
-    LazySingleton(classType: AuthenticationService)
+    LazySingleton(classType: AuthenticationService),
+    LazySingleton(classType: SharedPreferencesUtils)
   ],
 )
 class App {

@@ -8,23 +8,23 @@ import 'package:tp3/app/app.locator.dart';
 import 'package:tp3/app/app.router.dart';
 import 'package:tp3/generated/locale_keys.g.dart';
 import 'package:tp3/services/authentication_service.dart';
+import 'package:tp3/utils/shared_preferences_util.dart';
 import 'package:tp3/views/welcome_view.dart';
 
 class SignUpViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _authenticationService = locator<AuthenticationService>();
   final _dialogService = locator<DialogService>();
+  final _sharedPref = locator<SharedPreferencesUtils>();
 
   Future signUp(String name, String email, String password) async {
     setBusy(true);
     try {
       await _authenticationService.signUp(name, email, password);
       if(_authenticationService.isUserAuthenticated) {
-        SharedPreferences.getInstance().then((prefs) { 
-          prefs.setString('token', _authenticationService.authenticatedUser.token);
-          DateTime now = DateTime.now().add(const Duration(days: 3));
-          prefs.setInt('expiration', now.millisecondsSinceEpoch);
-        });
+        _sharedPref.setToken(_authenticationService.authenticatedUser.token);
+        DateTime now = DateTime.now().add(const Duration(days: 3));
+        _sharedPref.setExpiration(now.millisecondsSinceEpoch);
         await _navigationService.replaceWith(
           Routes.welcomeView,
           arguments: WelcomeView(),
