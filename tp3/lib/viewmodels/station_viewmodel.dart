@@ -8,6 +8,7 @@ import 'package:tp3/app/app.locator.dart';
 import 'package:tp3/generated/locale_keys.g.dart';
 import 'package:tp3/services/authentication_service.dart';
 import 'package:tp3/services/api_service.dart';
+import 'package:tp3/utils/shared_preferences_util.dart';
 import 'package:tp3/views/about_view.dart';
 import 'package:tp3/views/login_view.dart';
 import 'package:tp3/views/welcome_view.dart';
@@ -21,6 +22,7 @@ class StationsViewModel extends BaseViewModel {
   final _api_service = locator<ApiService>();
   final _dialogService = locator<DialogService>();
   final _authenticationService = locator<AuthenticationService>();
+  final _sharedPref = locator<SharedPreferencesUtils>();
   List<Station> stations = [];
 
   Future fetchAllStation() async {
@@ -39,15 +41,12 @@ class StationsViewModel extends BaseViewModel {
   }
 
   void disconnect() async {
-    final prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString("token");
+    String? token = await _sharedPref.getToken();
 
     if(token != null) {
       _authenticationService.disconnect();
 
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.remove('token');
-      await prefs.remove('expiration');
+      _sharedPref.removeAll();
     }
     await _navigationService.replaceWith(
       Routes.loginView,
