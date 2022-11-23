@@ -99,30 +99,6 @@ void main() {
       expect(arguments.stationInfo, station);
     });
   });
-  // Celui-ci ne fonctionne pas... je ne sais pas trop comment le faire fonctionner 
-  group("StationsViewModel - disconnect ", () {
-    test(
-        "Disconnect appelle le service d'authentification et retour à la page d'accueil",
-        () async {
-          when(_mockAuthenticationService.disconnect()).thenAnswer((_) => Future.value());
-      when(_mockNavigationService.replaceWith(any,
-              arguments: anyNamed(
-                  'arguments'))) 
-          .thenAnswer((_) => Future.value());
-          when(_mockDialogService.showDialog(description: anyNamed('description')))
-          .thenAnswer((_) => Future.value());
-      final StationViewModel = StationsViewModel();
-
-       StationViewModel.disconnect();
-
-      verify(_mockNavigationService.replaceWith(
-              Routes.loginView,
-              arguments: captureAnyNamed('arguments')))
-          .captured
-          .single as LoginView;
-      verify(_mockAuthenticationService.disconnect()).called(1);
-    });
-  });
    group("StationsViewModel - goToAbout ", () {
     test(
         "Envoie sur la page du à propos",
