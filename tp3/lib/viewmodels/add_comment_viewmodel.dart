@@ -3,11 +3,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tp3/app/app.locator.dart';
+import 'package:tp3/app/app.router.dart';
 import 'package:tp3/generated/locale_keys.g.dart';
 import 'package:tp3/services/api_service.dart';
 import 'package:tp3/services/authentication_service.dart';
 import 'package:tp3/utils/http_detailed_response.dart';
 import 'package:tp3/utils/shared_preferences_util.dart';
+import 'package:tp3/views/login_view.dart';
 
 class AddCommentModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();

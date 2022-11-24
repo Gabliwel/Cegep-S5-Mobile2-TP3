@@ -39,14 +39,15 @@ class StationDetailsView extends StatelessWidget {
             Text("$NUMBER_OF_COMMENT ${stationInfo.commentNumber}") :Text("$NUMBER_OF_COMMENT ${viewModel.commentNumber}") ,
             const SizedBox(height: 10,),
             const Text(STATION_LAST_MEASURE),
-            SizedBox( width: 75.0,
-            height: 42.0,
+            SizedBox( width: 100.0,
+            height: 60.0,
             child: DecoratedBox(
               decoration:  BoxDecoration(
                 color: viewModel.getStationColor(viewModel.pm25Average),
               ),
-              child: Center(
-                child: Text('${viewModel.pm25Average} μg/m3'),
+              child: Center( 
+                child:(viewModel.pm25Average != "-10")? 
+                 Text('${viewModel.pm25Average} μg/m3') : const Text(NO_MEASURE_FOR_LAST_MONTH),
               ),))
               ],
             )

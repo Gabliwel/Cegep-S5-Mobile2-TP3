@@ -33,7 +33,7 @@ class StationDetailsViewModel extends BaseViewModel {
     try {
       pm25Average  = await _api_service.getPM25Raw(stationSlug);
       if(pm25Average == ""){
-        pm25Average = NO_MEASURE_FOR_LAST_MONTH;
+        pm25Average = "-10";
       }
     } catch (e) {
       await _dialogService.showDialog(description: tr(LocaleKeys.app_error));
@@ -52,6 +52,9 @@ class StationDetailsViewModel extends BaseViewModel {
 
   Color getStationColor(pm25AverageParam){
     Color color = const Color.fromARGB(255, 50, 195, 65);
+    if(int.parse(pm25AverageParam) == -10){
+      color = const Color.fromARGB(255, 130, 222, 141);
+    }
     if(int.parse(pm25AverageParam) >= 0 && int.parse(pm25AverageParam) <= 11){
       color = const Color.fromARGB(255, 50, 195, 65);
     }else if(int.parse(pm25AverageParam) >= 12 && int.parse(pm25AverageParam) <= 34){
@@ -91,7 +94,7 @@ class StationDetailsViewModel extends BaseViewModel {
     String? token = prefs.getString("token");
 
     if(token != null) {
-      _authenticationService.disconnect();
+      _authenticationService.disconnect(token);
 
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove('token');
