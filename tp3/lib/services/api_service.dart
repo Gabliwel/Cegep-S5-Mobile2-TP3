@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:tp3/app/app.locator.dart';
 import 'package:tp3/models/comment.dart';
 import 'package:tp3/models/user.dart';
+import 'package:tp3/utils/http_detailed_response.dart';
 import 'package:tp3/utils/maybe.dart';
 import 'package:tp3/models/station.dart';
 import "package:tp3/utils/constants.dart";
@@ -57,11 +58,11 @@ class ApiService {
     return MayBe(user);
   }
 
-  Future<MayBe<User>> logoutUser(User user) async {
+  Future<MayBe<User>> logoutUser(String token) async {
     final Map<String,String> headerForBearer = {
       'Content-type' : 'application/json', 
       'Accept': 'application/json',
-      'Authorization': 'Bearer ${user.token}',
+      'Authorization': 'Bearer $token',
     };
     
     var response = await client.post(Uri.parse('$revolvair/logout'), headers: headerForBearer);
@@ -108,8 +109,10 @@ class ApiService {
   }
 
   Future<List<Station>> fetchActiveStation() async {
-  final response = await client
-      .get(Uri.parse('$revolvair/revolvair/stations/'));
+    final response = await client.get(Uri.parse('$revolvair/revolvair/stations/'));
+
+    log(response.statusCode.toString());  
+    
     if (response.statusCode == 200) {
       print(jsonDecode(response.body));
       return Station.getAllActiveStation(Station.getAllStation(jsonDecode(response.body)));
@@ -118,7 +121,7 @@ class ApiService {
     } 
   }
 
-  Future<bool> addComment(String text, String stationSlug, String token) async {
+  Future<HttpDetailedReponse> addComment(String text, String stationSlug, String token) async {
     var body = json.encode({"text": text, "status": "final"});
     final Map<String,String> headerForBearer = {
       'Content-type' : 'application/json', 
@@ -130,9 +133,9 @@ class ApiService {
     log(response.statusCode.toString());
 
     if (response.statusCode != 201) {
-      return false;
+      return HttpDetailedReponse(status: response.statusCode, succes: false);
     }
-    return true;
+    return HttpDetailedReponse(status: response.statusCode, succes: true);
   }
 
 

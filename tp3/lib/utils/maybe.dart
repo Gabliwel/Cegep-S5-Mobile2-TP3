@@ -3,6 +3,7 @@ import 'dart:developer';
 class MayBe<T> {
   final List<T> _values = [];
   String? _warning;
+  int? statusCode;
 
   T get value => _values.first;
   String? get warning => _warning;

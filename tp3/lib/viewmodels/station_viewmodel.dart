@@ -28,7 +28,7 @@ class StationsViewModel extends BaseViewModel {
   Future fetchAllStation() async {
     setBusy(true);
     try {
-      stations  = await _api_service.fetchActiveStation();
+      stations = await _api_service.fetchActiveStation();
     } catch (e) {
       await _dialogService.showDialog(description: tr(LocaleKeys.app_error));
     } finally {
@@ -44,7 +44,7 @@ class StationsViewModel extends BaseViewModel {
     String? token = await _sharedPref.getToken();
 
     if(token != null) {
-      _authenticationService.disconnect();
+      _authenticationService.disconnect(token);
 
       _sharedPref.removeAll();
     }

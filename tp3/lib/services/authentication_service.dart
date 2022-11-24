@@ -21,8 +21,8 @@ class AuthenticationService {
     _authenticatedUser = await _apiService.createUserProfile(name, email, password);
   }
 
-  Future disconnect() async {
-    _authenticatedUser = await _apiService.logoutUser(_authenticatedUser.value);
+  Future disconnect(String token) async {
+    _authenticatedUser = await _apiService.logoutUser(token);
   }
 
   bool hasWarning() {
