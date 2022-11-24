@@ -9,6 +9,7 @@ abstract class  LocaleKeys {
   static const login_expire_connexion = 'login.expire_connexion';
   static const login = 'login';
   static const app_error = 'app.error';
+  static const app_need_reconnection = 'app.need_reconnection';
   static const app = 'app';
   static const comment_success_add = 'comment.success_add';
   static const comment_failure_add = 'comment.failure_add';

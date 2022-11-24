@@ -3,13 +3,14 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:tp3/models/comment.dart' as _i6;
-import 'package:tp3/models/station.dart' as _i7;
-import 'package:tp3/models/user.dart' as _i5;
-import 'package:tp3/services/api_service.dart' as _i3;
+import 'package:tp3/models/comment.dart' as _i7;
+import 'package:tp3/models/station.dart' as _i8;
+import 'package:tp3/models/user.dart' as _i6;
+import 'package:tp3/services/api_service.dart' as _i4;
+import 'package:tp3/utils/http_detailed_response.dart' as _i3;
 import 'package:tp3/utils/maybe.dart' as _i2;
 
 // ignore_for_file: type=lint
@@ -33,10 +34,21 @@ class _FakeMayBe_0<T> extends _i1.SmartFake implements _i2.MayBe<T> {
         );
 }
 
+class _FakeHttpDetailedReponse_1 extends _i1.SmartFake
+    implements _i3.HttpDetailedReponse {
+  _FakeHttpDetailedReponse_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [ApiService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockApiService extends _i1.Mock implements _i3.ApiService {
+class MockApiService extends _i1.Mock implements _i4.ApiService {
   MockApiService() {
     _i1.throwOnMissingStub(this);
   }
@@ -50,7 +62,7 @@ class MockApiService extends _i1.Mock implements _i3.ApiService {
         returnValueForMissingStub: null,
       );
   @override
-  _i4.Future<_i2.MayBe<_i5.User>> getUserProfile(
+  _i5.Future<_i2.MayBe<_i6.User>> getUserProfile(
     String? email,
     String? password,
   ) =>
@@ -63,7 +75,7 @@ class MockApiService extends _i1.Mock implements _i3.ApiService {
           ],
         ),
         returnValue:
-            _i4.Future<_i2.MayBe<_i5.User>>.value(_FakeMayBe_0<_i5.User>(
+            _i5.Future<_i2.MayBe<_i6.User>>.value(_FakeMayBe_0<_i6.User>(
           this,
           Invocation.method(
             #getUserProfile,
@@ -73,9 +85,9 @@ class MockApiService extends _i1.Mock implements _i3.ApiService {
             ],
           ),
         )),
-      ) as _i4.Future<_i2.MayBe<_i5.User>>);
+      ) as _i5.Future<_i2.MayBe<_i6.User>>);
   @override
-  _i4.Future<_i2.MayBe<_i5.User>> createUserProfile(
+  _i5.Future<_i2.MayBe<_i6.User>> createUserProfile(
     String? name,
     String? email,
     String? password,
@@ -90,7 +102,7 @@ class MockApiService extends _i1.Mock implements _i3.ApiService {
           ],
         ),
         returnValue:
-            _i4.Future<_i2.MayBe<_i5.User>>.value(_FakeMayBe_0<_i5.User>(
+            _i5.Future<_i2.MayBe<_i6.User>>.value(_FakeMayBe_0<_i6.User>(
           this,
           Invocation.method(
             #createUserProfile,
@@ -101,50 +113,50 @@ class MockApiService extends _i1.Mock implements _i3.ApiService {
             ],
           ),
         )),
-      ) as _i4.Future<_i2.MayBe<_i5.User>>);
+      ) as _i5.Future<_i2.MayBe<_i6.User>>);
   @override
-  _i4.Future<_i2.MayBe<_i5.User>> logoutUser(_i5.User? user) =>
+  _i5.Future<_i2.MayBe<_i6.User>> logoutUser(String? token) =>
       (super.noSuchMethod(
         Invocation.method(
           #logoutUser,
-          [user],
+          [token],
         ),
         returnValue:
-            _i4.Future<_i2.MayBe<_i5.User>>.value(_FakeMayBe_0<_i5.User>(
+            _i5.Future<_i2.MayBe<_i6.User>>.value(_FakeMayBe_0<_i6.User>(
           this,
           Invocation.method(
             #logoutUser,
-            [user],
+            [token],
           ),
         )),
-      ) as _i4.Future<_i2.MayBe<_i5.User>>);
+      ) as _i5.Future<_i2.MayBe<_i6.User>>);
   @override
-  _i4.Future<List<_i6.Comment>> getCommentsForSlug(String? slugName) =>
+  _i5.Future<List<_i7.Comment>> getCommentsForSlug(String? slugName) =>
       (super.noSuchMethod(
         Invocation.method(
           #getCommentsForSlug,
           [slugName],
         ),
-        returnValue: _i4.Future<List<_i6.Comment>>.value(<_i6.Comment>[]),
-      ) as _i4.Future<List<_i6.Comment>>);
+        returnValue: _i5.Future<List<_i7.Comment>>.value(<_i7.Comment>[]),
+      ) as _i5.Future<List<_i7.Comment>>);
   @override
-  _i4.Future<String> getPM25Raw(String? slugName) => (super.noSuchMethod(
+  _i5.Future<String> getPM25Raw(String? slugName) => (super.noSuchMethod(
         Invocation.method(
           #getPM25Raw,
           [slugName],
         ),
-        returnValue: _i4.Future<String>.value(''),
-      ) as _i4.Future<String>);
+        returnValue: _i5.Future<String>.value(''),
+      ) as _i5.Future<String>);
   @override
-  _i4.Future<List<_i7.Station>> fetchActiveStation() => (super.noSuchMethod(
+  _i5.Future<List<_i8.Station>> fetchActiveStation() => (super.noSuchMethod(
         Invocation.method(
           #fetchActiveStation,
           [],
         ),
-        returnValue: _i4.Future<List<_i7.Station>>.value(<_i7.Station>[]),
-      ) as _i4.Future<List<_i7.Station>>);
+        returnValue: _i5.Future<List<_i8.Station>>.value(<_i8.Station>[]),
+      ) as _i5.Future<List<_i8.Station>>);
   @override
-  _i4.Future<bool> addComment(
+  _i5.Future<_i3.HttpDetailedReponse> addComment(
     String? text,
     String? stationSlug,
     String? token,
@@ -158,6 +170,17 @@ class MockApiService extends _i1.Mock implements _i3.ApiService {
             token,
           ],
         ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
+        returnValue: _i5.Future<_i3.HttpDetailedReponse>.value(
+            _FakeHttpDetailedReponse_1(
+          this,
+          Invocation.method(
+            #addComment,
+            [
+              text,
+              stationSlug,
+              token,
+            ],
+          ),
+        )),
+      ) as _i5.Future<_i3.HttpDetailedReponse>);
 }

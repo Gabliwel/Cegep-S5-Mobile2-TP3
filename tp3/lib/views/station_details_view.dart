@@ -12,7 +12,7 @@ class StationDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<StationDetailsViewModel>.reactive(
       viewModelBuilder: () => StationDetailsViewModel(),
-      onModelReady: (viewModel) => viewModel.getPM25MonthAverage(stationInfo.slugName), 
+      onModelReady: (viewModel) => viewModel.refesh(stationInfo.slugName), 
       builder: (context, viewModel, child) => Scaffold(
         appBar: AppBar(
           title: const Text("Details"),

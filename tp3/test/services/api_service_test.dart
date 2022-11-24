@@ -8,6 +8,7 @@ import 'package:tp3/models/comment.dart';
 import 'package:tp3/models/station.dart';
 import 'package:tp3/models/user.dart';
 import 'package:tp3/services/api_service.dart';
+import 'package:tp3/utils/http_detailed_response.dart';
 import 'package:tp3/utils/maybe.dart';
 
 import 'api_service_test.mocks.dart';
@@ -153,7 +154,7 @@ void main() {
       );
       final apiService = ApiService();
 
-      MayBe<User> response = await apiService.logoutUser(user);
+      MayBe<User> response = await apiService.logoutUser(user.token);
       expect(response.hasValue(), false);
     });
 
@@ -172,13 +173,14 @@ void main() {
       );
       final apiService = ApiService();
 
-      MayBe<User> response = await apiService.logoutUser(user);
+      MayBe<User> response = await apiService.logoutUser(user.token);
       expect(response.hasValue(), false);
     });
   
-});
+  });
+
   group('API Service - getCommentsForSlug', (){
-test("getCommentForSlug retourne la liste de commentaire avec le mauvais nom de station, soit 0", () async {
+    test("getCommentForSlug retourne la liste de commentaire avec le mauvais nom de station, soit 0", () async {
       String commentJson = jsonEncode({
       "id": 31,
       "text": "bonsoir a tous, petit comment",
@@ -194,7 +196,6 @@ test("getCommentForSlug retourne la liste de commentaire avec le mauvais nom de 
       List<Comment> response = await apiService.getCommentsForSlug(slugName);
       expect(response.length, 0);
     });
-
 
   test("getCommentForSlug retourne la liste de commentaire de la station ayant le nom en question", () async {
       String commentJson = jsonEncode({
@@ -214,10 +215,10 @@ test("getCommentForSlug retourne la liste de commentaire avec le mauvais nom de 
       List<Comment> response = await apiService.getCommentsForSlug(slugName);
       expect(response.length, 1);
     });
-});
+  });
 
-group('API Service - getPM25Raw', (){
-test("getPM25Raw retourne la moyenne des mesures du dernier mois de la station en question", () async {
+  group('API Service - getPM25Raw', (){
+    test("getPM25Raw retourne la moyenne des mesures du dernier mois de la station en question", () async {
       String pm25_raw= jsonEncode({
       "value" : "32"});
       String slugName = 'cegep-de-sainte-foy';
@@ -233,7 +234,7 @@ test("getPM25Raw retourne la moyenne des mesures du dernier mois de la station e
     });
 
 
-  test("getPM25Raw retourne une string vide si la station n'existe pas", () async {
+    test("getPM25Raw retourne une string vide si la station n'existe pas", () async {
       String slugName = 'cegep-de-sainte-foy33333333333333333333333333';
       when(_mockClientService.get(
         Uri.parse('$revolvair/revolvair/stations/$slugName/measures/pm25_raw/average/month'),
@@ -245,10 +246,10 @@ test("getPM25Raw retourne la moyenne des mesures du dernier mois de la station e
       String response = await apiService.getPM25Raw(slugName);
       expect(response, "");
     });
-});
+  });
 
-group('API Service - fetchActiveStation', (){
-test("Retourne la liste de toutes les stations", () async {
+  group('API Service - fetchActiveStation', (){
+    test("Retourne la liste de toutes les stations", () async {
       String stationToJson= jsonEncode({"name": "test", "comment_count": 2, "description": "test", "user_id":  2,"slugID": 2,"slug": "test"});
       when(_mockClientService.get(
         Uri.parse('$revolvair/revolvair/stations/'),
@@ -274,5 +275,73 @@ test("Retourne la liste de toutes les stations", () async {
       List<Station> response = await apiService.fetchActiveStation();
       expect(response.length, 0);
     });
-});
+  });
+
+  group('API Service - addComment', (){
+    test("Si le commentaire est ajouté, retourne un réponse authorize avec un succès à true", () async {
+      String token = "token";
+      String stationSlug = "slug";
+      var body = json.encode({"text": "text", "status": "final"});
+      final Map<String,String> headerForBearer = {
+        'Content-type' : 'application/json', 
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+      when(_mockClientService.post(Uri.parse('$revolvair/stations/$stationSlug/comments'), headers: headerForBearer, body: body))
+      .thenAnswer((_) async =>
+        http.Response('{"data" : []}', 201)
+      );
+
+      final apiService = ApiService();
+      HttpDetailedReponse response = await apiService.addComment("text", stationSlug, token);
+
+      expect(response.status, 201);
+      expect(response.succes, true);
+      expect(response.isAuthorize(), true);
+    });
+
+    test("Si le commentaire est pas ajouté mais authorize, retourne un réponse authorize avec un succès à false", () async {
+      String token = "token";
+      String stationSlug = "slug";
+      var body = json.encode({"text": "text", "status": "final"});
+      final Map<String,String> headerForBearer = {
+        'Content-type' : 'application/json', 
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+      when(_mockClientService.post(Uri.parse('$revolvair/stations/$stationSlug/comments'), headers: headerForBearer, body: body))
+      .thenAnswer((_) async =>
+        http.Response('{"data" : []}', 404)
+      );
+
+      final apiService = ApiService();
+      HttpDetailedReponse response = await apiService.addComment("text", stationSlug, token);
+
+      expect(response.status, 404);
+      expect(response.succes, false);
+      expect(response.isAuthorize(), true);
+    });
+
+    test("Si le commentaire est pas ajouté et pas authorize, retourne un réponse pas authorize avec un succès à false", () async {
+      String token = "token";
+      String stationSlug = "slug";
+      var body = json.encode({"text": "text", "status": "final"});
+      final Map<String,String> headerForBearer = {
+        'Content-type' : 'application/json', 
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+      when(_mockClientService.post(Uri.parse('$revolvair/stations/$stationSlug/comments'), headers: headerForBearer, body: body))
+      .thenAnswer((_) async =>
+        http.Response('{"data" : []}', 401)
+      );
+
+      final apiService = ApiService();
+      HttpDetailedReponse response = await apiService.addComment("text", stationSlug, token);
+
+      expect(response.status, 401);
+      expect(response.succes, false);
+      expect(response.isAuthorize(), false);
+    });
+  });
 }

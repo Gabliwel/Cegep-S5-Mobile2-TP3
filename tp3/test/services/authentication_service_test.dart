@@ -79,9 +79,9 @@ void main() {
       await _authenticationService.login(user.username, mdp);
       expect(_authenticationService.isUserAuthenticated, isTrue);
       
-      when(_mockApiService.logoutUser(user)).thenAnswer((realInvocation) =>Future.value(MayBe.empty()));
+      when(_mockApiService.logoutUser(user.token)).thenAnswer((realInvocation) =>Future.value(MayBe.empty()));
 
-      await _authenticationService.disconnect();
+      await _authenticationService.disconnect(user.token);
       expect(_authenticationService.isUserAuthenticated, isFalse);
     });
   });

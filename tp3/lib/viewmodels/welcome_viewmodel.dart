@@ -18,7 +18,7 @@ class WelcomeViewModel extends BaseViewModel {
     String? token = await _sharedPref.getToken();
 
     if(token != null) {
-      _authenticationService.disconnect();
+      _authenticationService.disconnect(token);
 
       _sharedPref.removeAll();
     }

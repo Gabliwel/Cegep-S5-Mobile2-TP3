@@ -8,7 +8,8 @@
         "expire_connexion": "La connexion est expiré, veuillez vous reconnecter."
     },
     "app": {
-        "error": "L'action demandée a provoquée une erreur. Communiquez avec les développeurs si l'erreur persiste."
+        "error": "L'action demandée a provoquée une erreur. Communiquez avec les développeurs si l'erreur persiste.",
+        "need_reconnection": "Une erreur est survenu, veuillez vous reconnecter."
     },
     "comment": {
         "success_add": "Le commentaire a bien été ajouté.",

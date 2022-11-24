@@ -390,10 +390,10 @@ class MockAuthenticationService extends _i1.Mock
         returnValue: _i5.Future<dynamic>.value(),
       ) as _i5.Future<dynamic>);
   @override
-  _i5.Future<dynamic> disconnect() => (super.noSuchMethod(
+  _i5.Future<dynamic> disconnect(String? token) => (super.noSuchMethod(
         Invocation.method(
           #disconnect,
-          [],
+          [token],
         ),
         returnValue: _i5.Future<dynamic>.value(),
       ) as _i5.Future<dynamic>);
