@@ -4,7 +4,6 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:tp3/app/app.locator.dart';
 import 'package:tp3/app/app.router.dart';
 import 'package:tp3/views/login_view.dart';
-import 'package:tp3/views/stations_view.dart';
 
 void main() async {
   setupLocator();

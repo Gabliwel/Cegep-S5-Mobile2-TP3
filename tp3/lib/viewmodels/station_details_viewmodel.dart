@@ -1,6 +1,7 @@
-import 'dart:developer';
+import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -15,8 +16,6 @@ import 'package:tp3/views/welcome_view.dart';
 import 'package:tp3/utils/constants.dart';
 
 import '../app/app.router.dart';
-import '../models/station.dart';
-
 
 class StationDetailsViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
@@ -53,6 +52,28 @@ class StationDetailsViewModel extends BaseViewModel {
     } finally {
       setBusy(false);
     }
+  }
+
+  Color getStationColor(pm25AverageParam){
+    Color color = const Color.fromARGB(255, 50, 195, 65);
+    if(int.parse(pm25AverageParam) >= 0 && int.parse(pm25AverageParam) <= 11){
+      color = const Color.fromARGB(255, 50, 195, 65);
+    }else if(int.parse(pm25AverageParam) >= 12 && int.parse(pm25AverageParam) <= 34){
+      color = const Color.fromARGB(255, 233, 241, 19);
+    }else if(int.parse(pm25AverageParam) >= 35 && int.parse(pm25AverageParam) <= 54){
+      color = const Color.fromARGB(255, 235, 191, 47);
+    }else if(int.parse(pm25AverageParam) >= 55 && int.parse(pm25AverageParam) <= 149){
+      color = const Color.fromARGB(255, 247, 156, 37);
+    }else if(int.parse(pm25AverageParam) >= 150 && int.parse(pm25AverageParam) <= 249){
+      color = const Color.fromARGB(255, 128, 30, 85);
+    }else if(int.parse(pm25AverageParam) >= 250 && int.parse(pm25AverageParam) <= 349){
+      color = const Color.fromARGB(255, 106, 23, 70);
+    }else if(int.parse(pm25AverageParam) >= 350 && int.parse(pm25AverageParam) <= 449){
+      color = const Color.fromARGB(255, 68, 15, 45);
+    }else if(int.parse(pm25AverageParam) >= 500){
+      color = const Color.fromARGB(255, 45, 11, 30);
+    }
+    return color;
   }
 
   void goToAbout() async {

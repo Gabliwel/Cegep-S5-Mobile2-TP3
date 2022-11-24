@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:ffi';
-// import 'dart:html';
 
 import 'package:http/http.dart' as http;
 import 'package:tp3/app/app.locator.dart';
@@ -9,7 +7,6 @@ import 'package:tp3/models/comment.dart';
 import 'package:tp3/models/user.dart';
 import 'package:tp3/utils/maybe.dart';
 import 'package:tp3/models/station.dart';
-import "package:tp3/utils/constants.dart";
 
 class ApiService {
   var client = locator<http.Client>();

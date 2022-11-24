@@ -1,13 +1,7 @@
-import 'dart:developer';
-
-import 'package:easy_localization/easy_localization.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tp3/app/app.locator.dart';
 import 'package:tp3/app/app.router.dart';
-import 'package:tp3/generated/locale_keys.g.dart';
-import 'package:tp3/services/api_service.dart';
 import 'package:tp3/services/authentication_service.dart';
 import 'package:tp3/utils/shared_preferences_util.dart';
 import 'package:tp3/views/about_view.dart';

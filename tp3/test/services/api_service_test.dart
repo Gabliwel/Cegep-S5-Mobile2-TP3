@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:tp3/app/app.locator.dart';
@@ -12,8 +11,6 @@ import 'package:tp3/services/api_service.dart';
 import 'package:tp3/utils/maybe.dart';
 
 import 'api_service_test.mocks.dart';
-
-
 // https://staging.revolvair.org/documentation/?url=https://staging.revolvair.org/documentation/api-docs.json#/
 const revolvair = 'https://test.revolvair.org/api';
 

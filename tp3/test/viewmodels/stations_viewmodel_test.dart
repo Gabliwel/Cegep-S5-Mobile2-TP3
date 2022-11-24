@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -15,7 +12,6 @@ import 'package:tp3/services/api_service.dart';
 import 'package:tp3/services/authentication_service.dart';
 import 'package:tp3/viewmodels/station_viewmodel.dart';
 import 'package:tp3/views/about_view.dart';
-import 'package:tp3/views/login_view.dart';
 import 'package:tp3/views/welcome_view.dart';
 import 'package:tp3/utils/shared_preferences_util.dart';
 
@@ -145,6 +141,7 @@ void main() {
           .captured
           .single as WelcomeView;
     });
+    
   });
 
 

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 class MayBe<T> {
   final List<T> _values = [];
   String? _warning;

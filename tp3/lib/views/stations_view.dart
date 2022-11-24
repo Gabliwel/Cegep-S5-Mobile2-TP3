@@ -1,12 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:stacked/stacked.dart';
-import 'package:tp3/models/station.dart';
 import 'package:tp3/utils/constants.dart';
 import 'package:tp3/viewmodels/station_viewmodel.dart';
-import 'package:tp3/views/comments_view.dart';
 import 'package:tp3/widgets/search_bar_widget.dart';
 
 class AllStationView extends StatefulWidget {

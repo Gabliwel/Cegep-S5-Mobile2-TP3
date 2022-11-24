@@ -1,10 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tp3/models/user.dart';
 import 'package:tp3/viewmodels/welcome_viewmodel.dart';
-import 'package:tp3/views/about_view.dart';
 import 'package:tp3/utils/constants.dart';
 
 class WelcomeView extends StatelessWidget {
