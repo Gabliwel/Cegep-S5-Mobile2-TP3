@@ -1,0 +1,19 @@
+{
+    "login": {
+        "user_does_not_exist": "Impossible de trouver l'utilisateur.",
+        "user_not_empty": "Ne peut être vide.",
+        "user_password_short": "Ne peut avoir moins de 5 charactères.",
+        "user_email_invalid": "Adresse courriel invalide.",
+        "cant_create_user": "Impossible de créer le compte, veuillez vérifier vos informations.",
+        "expire_connexion": "La connexion est expiré, veuillez vous reconnecter."
+    },
+    "app": {
+        "error": "L'action demandée a provoquée une erreur. Communiquez avec les développeurs si l'erreur persiste.",
+        "need_reconnection": "Une erreur est survenu, veuillez vous reconnecter."
+    },
+    "comment": {
+        "success_add": "Le commentaire a bien été ajouté.",
+        "failure_add": "Une erreur est survenu lors de l'ajout."
+    }
+}
+  
