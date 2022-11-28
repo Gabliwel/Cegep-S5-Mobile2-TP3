@@ -46,6 +46,7 @@ class _LoginViewState extends State<LoginView> {
                 Image.asset(REVOLVAIR_LOGO_PATH),
                 const SizedBox(height: 25),
                 TextFormField(
+                  key: const ValueKey('emailSignInField'),
                   controller: _loginController,
                   validator: (value) => Validators.validateEmail(value),
                   decoration: const InputDecoration(
@@ -56,6 +57,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
+                  key: const ValueKey('passwordSignInField'),
                   controller: _loginController2,
                   validator: (value) => Validators.validatePassword(value),
                   decoration: const InputDecoration(
@@ -71,6 +73,7 @@ class _LoginViewState extends State<LoginView> {
                 loginViewModel.isBusy
                   ? const CircularProgressIndicator()
                   : ElevatedButton(
+                    key: const ValueKey("connectButton"),
                       child: const Text(CONNECT),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
