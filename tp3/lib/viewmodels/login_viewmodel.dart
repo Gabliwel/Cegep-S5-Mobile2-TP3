@@ -11,6 +11,7 @@ import 'package:tp3/models/user.dart';
 import 'package:tp3/services/authentication_service.dart';
 import 'package:tp3/utils/shared_preferences_util.dart';
 import 'package:tp3/viewmodels/welcome_viewmodel.dart';
+import 'package:tp3/views/sign_up_view.dart';
 import 'package:tp3/views/stations_view.dart';
 import 'package:tp3/views/welcome_view.dart';
 
@@ -47,10 +48,10 @@ class LoginViewModel extends BaseViewModel {
   }
 
   void signUp() async {
-    await _navigationService.navigateTo(Routes.signUpView);
+    await _navigationService.navigateTo(Routes.signUpView, arguments: SignUpView());
   }
 
-  void rememberMeLogin() async {
+  Future rememberMeLogin() async {
     setBusyRememberLogin(true);
 
     String? token = await _sharedPref.getToken();

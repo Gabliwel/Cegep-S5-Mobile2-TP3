@@ -40,7 +40,7 @@ class StationsViewModel extends BaseViewModel {
     await _navigationService.navigateTo(Routes.stationDetailsView, arguments: StationDetailsViewArguments(stationInfo: stationSlug))?.then((value) => fetchAllStation());
   }
 
-  void disconnect() async {
+  Future disconnect() async {
     String? token = await _sharedPref.getToken();
 
     if(token != null) {

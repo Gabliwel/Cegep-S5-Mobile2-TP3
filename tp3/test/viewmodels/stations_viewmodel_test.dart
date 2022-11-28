@@ -146,6 +146,25 @@ void main() {
           .single as WelcomeView;
     });
   });
+  group("StationsViewModel - disconnect ", () {
+    test("Envoie sur la page d'accueil", () async {
+      when(_mockNavigationService.replaceWith(any,
+              arguments: anyNamed(
+                  'arguments'))) 
+          .thenAnswer((_) => Future.value());
+      when(_mockSharedPrefs.getToken()).thenAnswer((_) => Future.value("aaa"));
+      when(_mockAuthenticationService.disconnect("aaa")).thenAnswer((_) => Future.value());
+      final StationViewModel = StationsViewModel();
+
+      await StationViewModel.disconnect();
+
+      verify(_mockNavigationService.replaceWith(
+              Routes.loginView,
+              arguments: captureAnyNamed('arguments')))
+          .captured
+          .single as LoginView;
+    });
+  });
 
 
   

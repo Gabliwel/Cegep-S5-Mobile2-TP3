@@ -23,8 +23,6 @@ class StationDetailsViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _api_service = locator<ApiService>();
   final _dialogService = locator<DialogService>();
-  final _authenticationService = locator<AuthenticationService>();
-  final _sharedPref = locator<SharedPreferencesUtils>();
   String pm25Average = "";
   List<Comment> commentList = List.empty(growable: true);
   int commentNumber = -1;
