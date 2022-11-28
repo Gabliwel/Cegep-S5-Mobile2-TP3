@@ -13,6 +13,8 @@ import 'package:tp3/utils/constants.dart';
 import 'package:tp3/utils/shared_preferences_util.dart';
 import 'package:tp3/viewmodels/station_details_viewmodel.dart';
 
+import 'add_comment_viewmodel_test.mocks.dart';
+
 @GenerateMocks([NavigationService, AuthenticationService, DialogService, ApiService, SharedPreferencesUtils])
 void main() {
   final _mockNavigationService = MockNavigationService();
