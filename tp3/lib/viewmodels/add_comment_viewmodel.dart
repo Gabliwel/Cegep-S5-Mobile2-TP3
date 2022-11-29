@@ -21,21 +21,16 @@ class AddCommentModel extends BaseViewModel {
   Future<bool> addComment(String text, String stationSlug) async {
     setBusy(true);
 
-    final prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString("token");
+    String? token = await _sharedPref.getToken();
 
     //toujours non null, mais pas le choix
     if(token != null) {
       HttpDetailedReponse reponse = await _api.addComment(text, stationSlug, token);
 
       if(!reponse.isAuthorize()) {
-        String? token = await _sharedPref.getToken();
-
-        if(token != null) {
-          _authenticationService.disconnect(token);
-
-          _sharedPref.removeAll();
-        }
+        _authenticationService.disconnect(token);
+        _sharedPref.removeAll();
+        
         await _dialogService.showDialog(description: tr(LocaleKeys.app_need_reconnection));
         await _navigationService.replaceWith(
           Routes.loginView,
