@@ -10,9 +10,12 @@ import 'package:tp3/models/user.dart';
 import 'package:tp3/services/authentication_service.dart';
 import 'package:tp3/utils/shared_preferences_util.dart';
 import 'package:tp3/viewmodels/login_viewmodel.dart';
+import 'package:tp3/views/sign_up_view.dart';
 import 'package:tp3/views/welcome_view.dart';
 
 import 'login_viewmodel_test.mocks.dart';
+
+// dart run build_runner build
 
 @GenerateMocks([NavigationService, AuthenticationService, DialogService, SharedPreferencesUtils])
 void main() {
@@ -84,6 +87,87 @@ void main() {
         description: tr(LocaleKeys.app_error)))
         .called(1);
       verifyNever(_mockNavigationService.replaceWith(any));
+    });
+  });
+  group("LoginViewModel - signUp", () {
+    test("Si on appel la méthode, on navigue sur la page de création de compte", () async {
+      when(_mockNavigationService.navigateTo(any,
+          arguments: anyNamed(
+          'arguments')))
+      .thenAnswer((_) => Future.value());
+
+      final loginViewModel = LoginViewModel();
+      loginViewModel.signUp();
+
+      verify(_mockNavigationService.navigateTo(
+              Routes.signUpView,
+              arguments: captureAnyNamed('arguments')))
+          .captured
+          .single as SignUpView;
+    });
+  });
+
+  group("LoginViewModel - signUp", () {
+    test("Si on appel la méthode, on navigue sur la page de création de compte", () async {
+      when(_mockNavigationService.navigateTo(any,
+          arguments: anyNamed(
+          'arguments')))
+      .thenAnswer((_) => Future.value());
+
+      final loginViewModel = LoginViewModel();
+      loginViewModel.signUp();
+
+      verify(_mockNavigationService.navigateTo(
+              Routes.signUpView,
+              arguments: captureAnyNamed('arguments')))
+          .captured
+          .single as SignUpView;
+    });
+  });
+
+  group("LoginViewModel - rememberMeLogin", () {
+    test("Si un token n'est pas présent, ne fait rien", () async {
+      when(_mockSharedPrefs.getToken()).thenAnswer((_) => Future.value(null));
+      when(_mockSharedPrefs.getExpiration()).thenAnswer((_) => Future.value(null));
+
+      final loginViewModel = LoginViewModel();
+      loginViewModel.rememberMeLogin();
+
+      verifyNever(_mockNavigationService.navigateTo(any));
+    });
+
+    test("Si un token est présent, mais non valide, affiche un message", () async {
+      when(_mockSharedPrefs.getToken()).thenAnswer((_) => Future.value("token"));
+      when(_mockSharedPrefs.getExpiration()).thenAnswer((_) => Future.value(1));
+      when(_mockDialogService.showDialog(description: anyNamed('description')))
+          .thenAnswer((_) => Future.value());
+
+      final loginViewModel = LoginViewModel();
+      await loginViewModel.rememberMeLogin();
+
+      verify(_mockDialogService.showDialog(
+        description: tr(LocaleKeys.login_expire_connexion)))
+        .called(1);
+      verifyNever(_mockNavigationService.navigateTo(any));
+    });
+
+    test("Si un token est présent, et valide, change de page pour l'accueil", () async {
+      int time = DateTime.now().add(const Duration(days: 1)).millisecondsSinceEpoch;
+      when(_mockSharedPrefs.getToken()).thenAnswer((_) => Future.value("token"));
+      when(_mockSharedPrefs.getExpiration()).thenAnswer((_) => Future.value(time));
+      when(_mockNavigationService.replaceWith(any,
+          arguments: anyNamed(
+          'arguments')))
+      .thenAnswer((_) => Future.value());
+
+      final loginViewModel = LoginViewModel();
+      await loginViewModel.rememberMeLogin();
+
+      verify(_mockNavigationService.replaceWith(
+              Routes.welcomeView,
+              arguments: captureAnyNamed('arguments')))
+          .captured
+          .single as WelcomeView;
     });
   });
 }
