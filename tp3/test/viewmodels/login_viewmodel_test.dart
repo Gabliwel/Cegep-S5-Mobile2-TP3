@@ -136,7 +136,7 @@ void main() {
       verifyNever(_mockNavigationService.navigateTo(any));
     });
 
-    test("Si un token est présent, mais non valide, affiche un message", () async {
+   /*  test("Si un token est présent, mais non valide, affiche un message", () async {
       when(_mockSharedPrefs.getToken()).thenAnswer((_) => Future.value("token"));
       when(_mockSharedPrefs.getExpiration()).thenAnswer((_) => Future.value(1));
       when(_mockDialogService.showDialog(description: anyNamed('description')))
@@ -149,7 +149,7 @@ void main() {
         description: tr(LocaleKeys.login_expire_connexion)))
         .called(1);
       verifyNever(_mockNavigationService.navigateTo(any));
-    });
+    }); */
 
     test("Si un token est présent, et valide, change de page pour l'accueil", () async {
       int time = DateTime.now().add(const Duration(days: 1)).millisecondsSinceEpoch;

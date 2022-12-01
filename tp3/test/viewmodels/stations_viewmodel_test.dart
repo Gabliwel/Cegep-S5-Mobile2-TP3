@@ -12,6 +12,7 @@ import 'package:tp3/services/api_service.dart';
 import 'package:tp3/services/authentication_service.dart';
 import 'package:tp3/viewmodels/station_viewmodel.dart';
 import 'package:tp3/views/about_view.dart';
+import 'package:tp3/views/login_view.dart';
 import 'package:tp3/views/welcome_view.dart';
 import 'package:tp3/utils/shared_preferences_util.dart';
 

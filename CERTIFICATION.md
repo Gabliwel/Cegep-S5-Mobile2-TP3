@@ -13,4 +13,5 @@ Réalisé par Gabriel Bertrand & Keven Champagne
 
 ##### Bogue(s) connu(s):
 - Aucun 
+- Pour faire rouler les tests d'intégrations, il faut s'assurer de se déconnecter de l'application avant de la fermer sinon, les tests ne fonctionneront pas.
 
