@@ -82,6 +82,7 @@ class _LoginViewState extends State<LoginView> {
                       }
                     ),
                 ElevatedButton(
+                  key: const ValueKey("noAccountButton"),
                   child: const Text(NO_ACCOUNT_LABEL),
                   onPressed: () {
                     loginViewModel.signUp();

@@ -60,9 +60,9 @@ class LoginViewModel extends BaseViewModel {
           Routes.welcomeView,
           arguments: WelcomeView(),
         );
-      } else {
+      } /* else {
         await _dialogService.showDialog(description: tr(LocaleKeys.login_expire_connexion));
-      }
+      } */
     }
 
     setBusyRememberLogin(false);
