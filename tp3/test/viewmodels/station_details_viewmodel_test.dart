@@ -49,7 +49,7 @@ void main() {
       final viewModel = StationDetailsViewModel();
       await viewModel.getPM25MonthAverage("stationSlug");
       
-      expect(viewModel.pm25Average, NO_MEASURE_FOR_LAST_MONTH);
+      expect(viewModel.pm25Average, "-10");
     });
 
     test("Si le resultat de l'api lance une erreur, on affiche un message", () async {

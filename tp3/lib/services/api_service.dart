@@ -11,7 +11,7 @@ import 'package:tp3/models/station.dart';
 
 class ApiService {
   var client = locator<http.Client>();
-  static const revolvair = 'https://staging.revolvair.org/api';
+  static const revolvair = 'https://test.revolvair.org/api';
   static const Map<String,String> headers = {
     'Content-type' : 'application/json', 
     'Accept': 'application/json'

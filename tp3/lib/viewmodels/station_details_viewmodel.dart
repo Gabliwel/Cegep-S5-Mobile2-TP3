@@ -19,7 +19,6 @@ import '../app/app.router.dart';
 
 class StationDetailsViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
-  final _authenticationService = locator<AuthenticationService>();
   final _api_service = locator<ApiService>();
   final _dialogService = locator<DialogService>();
   String pm25Average = "";
@@ -71,36 +70,6 @@ class StationDetailsViewModel extends BaseViewModel {
       color = const Color.fromARGB(255, 45, 11, 30);
     }
     return color;
-  }
-
-  void goToAbout() async {
-    await _navigationService.navigateTo(
-      Routes.aboutView,
-      arguments: const AboutView(),
-    );
-  }
-
-  void goToWelcome() async {
-    await _navigationService.replaceWith(
-      Routes.welcomeView,
-      arguments: const WelcomeView(),
-    );
-  }
-
-  void disconnect() async {
-    final prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString("token");
-
-    if(token != null) {
-      _authenticationService.disconnect(token);
-
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.remove('token');
-    }
-    await _navigationService.replaceWith(
-      Routes.loginView,
-      arguments: const LoginView(),
-    );
   }
 
   Future sendToCommentPage(String stationSlug) async {
