@@ -47,6 +47,7 @@ class _AllStationViewState extends State<AllStationView> {
               },
             ),
             ListTile(
+              key: const ValueKey('disconnectButton'),
               title: const Text(DISCONNECT),
               onTap: () {
                 Navigator.pop(context);

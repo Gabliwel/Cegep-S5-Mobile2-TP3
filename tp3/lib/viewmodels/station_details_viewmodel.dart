@@ -10,20 +10,18 @@ import 'package:tp3/generated/locale_keys.g.dart';
 import 'package:tp3/models/comment.dart';
 import 'package:tp3/services/authentication_service.dart';
 import 'package:tp3/services/api_service.dart';
-import 'package:tp3/utils/shared_preferences_util.dart';
 import 'package:tp3/views/about_view.dart';
 import 'package:tp3/views/login_view.dart';
 import 'package:tp3/views/welcome_view.dart';
-import 'package:tp3/utils/constants.dart';
+
 
 import '../app/app.router.dart';
 
 class StationDetailsViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  final _authenticationService = locator<AuthenticationService>();
   final _api_service = locator<ApiService>();
   final _dialogService = locator<DialogService>();
-  final _authenticationService = locator<AuthenticationService>();
-  final _sharedPref = locator<SharedPreferencesUtils>();
   String pm25Average = "";
   List<Comment> commentList = List.empty(growable: true);
   int commentNumber = -1;

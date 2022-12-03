@@ -13,7 +13,7 @@ const String  COMMENT_LABEL = "Commentaire";
 const String  ADD_COMMENT = "Ajouter";
 
 // COMMENT VIEW
-const String  COMMENT_FOR = "Commentaire pour :";
+const String  COMMENT_FOR = "Commentaire pour ";
 const String  NO_COMMENT = "Aucun commentaire";
 
 // LOGIN VIEW
@@ -26,6 +26,7 @@ const String  NO_ACCOUNT_LABEL = "Je n\'ai pas de compte";
 
 // SIGN UP VIEW
 const String  INSCRIPTION_LABEL = "Inscription";
+const String  CONNECTION_LABEL = "Connexion";
 const String  NAME_LABEL = "Nom";
 const String  EMAIL_LABEL = "Email";
 
@@ -45,7 +46,7 @@ const String  NO_MEASURE_FOR_LAST_MONTH = "Il n'y a pas de moyenne pour le mois 
 
 
 // STATION VIEW
-const String  STATIONS_LABEL = "Station";
+const String  STATIONS_LABEL = "Liste des stations";
 const String  MENU_LABEL = "Menu";
 const String  ABOUT_LABEL = "À propos";
 const String  DISCONNECT = "Se déconnecter";
