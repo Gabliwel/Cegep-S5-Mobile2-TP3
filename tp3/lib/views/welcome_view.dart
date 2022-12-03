@@ -13,6 +13,7 @@ class WelcomeView extends StatelessWidget {
       builder: (BuildContext context, viewModel, Widget? child) => Scaffold(
         appBar: AppBar(title: const Text(SITE_URL)),
         drawer: Drawer(
+          key: const ValueKey('drawerKey'),
           child: ListView(
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
@@ -32,6 +33,7 @@ class WelcomeView extends StatelessWidget {
             ),
             ListTile(
               title: const Text(DISCONNECT),
+              key: const ValueKey('disconnectButton'),
               onTap: () {
                 Navigator.pop(context);
                 viewModel.disconnect();
@@ -53,6 +55,7 @@ class WelcomeView extends StatelessWidget {
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
+           key: const ValueKey('bottomNavigationBar'),
         // pas le choix de mettre plus de un element, sinon flutter cause une erreur
         // cest pourquoi même si ils ne sont pas fonctionnels, les trois éléments sont présents
           items: const <BottomNavigationBarItem>[
