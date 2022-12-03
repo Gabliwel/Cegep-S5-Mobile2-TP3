@@ -12,14 +12,16 @@ import 'package:tp3/utils/http_detailed_response.dart';
 import 'package:tp3/utils/maybe.dart';
 
 import 'api_service_test.mocks.dart';
+
 // https://staging.revolvair.org/documentation/?url=https://staging.revolvair.org/documentation/api-docs.json#/
-const revolvair = 'https://test.revolvair.org/api';
 
 @GenerateMocks([http.Client])
 void main() {
   final _mockClientService = MockClient();
   locator.registerSingleton<http.Client>(_mockClientService);
 
+  const revolvair = 'https://test.revolvair.org/api';
+  
   tearDown(() {
     reset(_mockClientService);
   });

@@ -26,7 +26,7 @@ class _SignUpViewState extends State<SignUpView> {
     return ViewModelBuilder<SignUpViewModel>.reactive(
       viewModelBuilder: () => SignUpViewModel(),
       builder: (context, signUpViewModel, child) => Scaffold(
-        appBar: AppBar(title: const Text(INSCRIPTION_LABEL),),
+        appBar: AppBar(title: const Text(CONNECTION_LABEL),),
         body: Form(
           key: _formKey,
           child: Center(
@@ -35,6 +35,7 @@ class _SignUpViewState extends State<SignUpView> {
               children: <Widget>[
                 const SizedBox(height: 20),
                 TextFormField(
+                  key: const ValueKey("nameSignUpKey"),
                   controller: _loginController,
                   validator: (value) => Validators.validateBasicField(value),
                   decoration: const InputDecoration(
@@ -45,6 +46,7 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
+                  key: const ValueKey("emailSignUpKey"),
                   controller: _loginController2,
                   validator: (value) => Validators.validateEmail(value),
                   decoration: const InputDecoration(
@@ -55,6 +57,7 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
+                  key: const ValueKey("passwordSignUpKey"),
                   controller: _loginController3,
                   validator: (value) => Validators.validatePassword(value),
                   decoration: const InputDecoration(
@@ -68,6 +71,7 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
                 const SizedBox(height: 5),
                 CheckboxListTile(
+                  key: const ValueKey("termsAndConditionSignUpKey"),
                   value: _termsChecked,
                   title: const Text(TERMS_AND_CONDITION_ACCEPT),
                   onChanged: (newValue) {
@@ -95,6 +99,7 @@ class _SignUpViewState extends State<SignUpView> {
                 signUpViewModel.isBusy
                   ? const CircularProgressIndicator()
                   : ElevatedButton(
+                      key: const ValueKey("createAccountButton"),
                       child: const Text(CREATE_ACCOUNT_LABEL),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
