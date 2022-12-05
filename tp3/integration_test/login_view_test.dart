@@ -21,8 +21,7 @@ void main() {
     testWidgets('With good credential, logs you in and sends you to the welcome view',
         (tester) async {
       app.main();
-      String email = "test12345@hotmail.com";
-      String password = "test12345";
+     
 
       Random random = Random();
       int number = random.nextInt(4294967296);
@@ -31,26 +30,11 @@ void main() {
       String emailSignUp = "test$number@hotmail.com";
       String passwordSignUp = "$number";
 
-      
-      await tester.pumpAndSettle();
-      
-      await tester.enterText(find.byKey(const ValueKey('emailSignInField')), email);
-      await tester.enterText(find.byKey(const ValueKey('passwordSignInField')), password);
+       String email = emailSignUp;
+      String password = passwordSignUp;
 
-      await tester.tap(find.byKey(const ValueKey("connectButton")));
-      await tester.pumpAndSettle(); 
-
-      expect(find.text(WELCOME_TEXT), findsOneWidget);
-      await addDelay(2000);
-      await tester.pumpAndSettle(); 
-      await addDelay(2000);
-      await tester.tap(find.byTooltip('Ouvrir le menu de navigation'));
-      await addDelay(2000);
-      await tester.tap(find.byKey(const ValueKey('disconnectButton')));
-
-      await tester.pumpAndSettle(); 
-      expect(find.text(CONNECTION_LABEL), findsOneWidget);
       
+
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey("noAccountButton")));
       await addDelay(2000);
@@ -66,6 +50,24 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text(WELCOME_TEXT), findsOneWidget);
+      await addDelay(2000);
+      await tester.pumpAndSettle(); 
+      await addDelay(2000);
+      await tester.tap(find.byTooltip('Ouvrir le menu de navigation'));
+      await addDelay(2000);
+      await tester.tap(find.byKey(const ValueKey('disconnectButton')));
+
+      await tester.pumpAndSettle(); 
+      expect(find.text(CONNECTION_LABEL), findsOneWidget);
+
+      await tester.pumpAndSettle();
+      
+      await tester.enterText(find.byKey(const ValueKey('emailSignInField')), email);
+      await tester.enterText(find.byKey(const ValueKey('passwordSignInField')), password);
+
+      await tester.tap(find.byKey(const ValueKey("connectButton")));
+      await tester.pumpAndSettle(); 
+
       
       await tester.pumpAndSettle(); 
       await addDelay(2000);
@@ -83,6 +85,7 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('disconnectButton')));
 
       await tester.pumpAndSettle(); 
+      await addDelay(2000);
       expect(find.text(CONNECTION_LABEL), findsOneWidget);
     });
   }); 
